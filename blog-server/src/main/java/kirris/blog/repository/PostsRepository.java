@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,7 @@ public class PostsRepository {
     }
 
     public List<Posts> findAll() {
-        return em.createQuery("select p from Posts p order by p.id desc", Posts.class)
+        return em.createQuery("SELECT p from Posts p ORDER BY p.id desc", Posts.class)
                 //.setFirstResult()
                 //.setMaxResults(9)
                 .getResultList();
@@ -37,6 +38,14 @@ public class PostsRepository {
     }
 
     public void delete(Long id) {
+        TypedQuery<Posts> query = em.createQuery("SELECT p from Posts p WHERE p.id = :id", Posts.class);
+        query.setParameter("id", id);
 
+        List<Posts> post = query.getResultList();
+//        if(post.size() != 1) {
+//            return false;
+//        }
+        em.remove(post.get(0));
     }
+
 }

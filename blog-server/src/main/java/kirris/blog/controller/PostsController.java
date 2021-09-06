@@ -42,6 +42,13 @@ public class PostsController {
         return new PostsResponseDto(entity);
     }
 
+//    @Transactional
+//    @PutMapping
+//    public PostsResponseDto update(@PathVariable("id") Long id, @RequestBody PostsRequestDto post) {
+//        //
+//    }
+
+    @Transactional
     @DeleteMapping("/{id}")
     public void remove(@PathVariable("id") Long id) {
         postsRepository.delete(id);
