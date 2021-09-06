@@ -42,11 +42,17 @@ public class PostsController {
         return new PostsResponseDto(entity);
     }
 
-//    @Transactional
-//    @PutMapping
-//    public PostsResponseDto update(@PathVariable("id") Long id, @RequestBody PostsRequestDto post) {
-//        //
-//    }
+    @Transactional
+    @PutMapping("/{id}")
+    public PostsResponseDto update(@PathVariable("id") Long id, @RequestBody PostsRequestDto post) {
+        Posts entity = postsRepository.findById(id)
+                .orElseThrow(() -> new
+                        IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+        entity.update(post.getTitle(), post.getBody(), post.getTags());
+        return new PostsResponseDto(entity);
+        //merge 지양
+    }
 
     @Transactional
     @DeleteMapping("/{id}")

@@ -31,7 +31,14 @@ public class Posts {
     private String tags; //이게 수정이 될 지...? HashMap / ArrayList
 
     @Builder
-    public Posts(String title, String body, String tags) {
+    public Posts(Long id, String title, String body, String tags) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.tags = tags;
+    }
+
+    public void update(String title, String body, String tags) {
         this.title = title;
         this.body = body;
         this.tags = tags;

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 @Getter
 @NoArgsConstructor
 public class PostsRequestDto {
-    private Long id;
     private String title;
     private String body;
     private String tags;

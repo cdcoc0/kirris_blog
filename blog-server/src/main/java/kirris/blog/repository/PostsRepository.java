@@ -37,6 +37,11 @@ public class PostsRepository {
         return Optional.ofNullable(post);
     }
 
+    /*public Posts update(Long id, PostsRequestDto post) {
+        Posts targetPost = em.find(Posts.class, id);
+        return em.merge(targetPost.builder().id(id).title(post.getTitle()).body(post.getBody()).tags(post.getTags()).build());
+    }*/
+
     public void delete(Long id) {
         TypedQuery<Posts> query = em.createQuery("SELECT p from Posts p WHERE p.id = :id", Posts.class);
         query.setParameter("id", id);
@@ -47,5 +52,4 @@ public class PostsRepository {
 //        }
         em.remove(post.get(0));
     }
-
 }
