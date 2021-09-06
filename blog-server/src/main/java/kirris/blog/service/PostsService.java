@@ -1,8 +1,6 @@
-package kirris.blog;
+package kirris.blog.service;
 
-import kirris.blog.domain.PostsRequestDto;
-import kirris.blog.domain.PostsResponseDto;
-import kirris.blog.repository.PostRepository;
+import kirris.blog.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,5 +9,5 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class PostsService {
-    private final PostRepository postRepository;
+    private final PostsRepository postRepository;
 }
