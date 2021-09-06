@@ -2,13 +2,11 @@ package kirris.blog.repository;
 
 import kirris.blog.domain.Posts;
 import kirris.blog.domain.PostsRequestDto;
-import kirris.blog.domain.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,11 +23,12 @@ public class PostsRepository {
         return post.getId();
     }
 
-    public List<Posts> findAll() {
+    public List<Posts> findAll(int page) {
         return em.createQuery("SELECT p from Posts p ORDER BY p.id desc", Posts.class)
-                //.setFirstResult()
-                //.setMaxResults(9)
+                .setFirstResult((page - 1) * 9)
+                .setMaxResults(9)
                 .getResultList();
+        //last-page 전달?
     }
 
     public Optional<Posts> findById(Long id) {

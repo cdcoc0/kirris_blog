@@ -27,8 +27,8 @@ public class PostsController {
 
     @Transactional(readOnly = true)
     @GetMapping("/")
-    public List<PostsResponseDto> list() {
-        return postsRepository.findAll().stream()
+    public List<PostsResponseDto> list(@RequestParam(defaultValue = "1") int page) {
+        return postsRepository.findAll(page).stream()
                 .map(PostsResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -38,7 +38,7 @@ public class PostsController {
     public PostsResponseDto read(@PathVariable("id") Long id) {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new
-                        IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+                        IllegalArgumentException("해당 게시글이 없습니다. id=" + id)); //404
         return new PostsResponseDto(entity);
     }
 
@@ -47,7 +47,7 @@ public class PostsController {
     public PostsResponseDto update(@PathVariable("id") Long id, @RequestBody PostsRequestDto post) {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new
-                        IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+                        IllegalArgumentException("해당 게시글이 없습니다. id=" + id)); //404
 
         entity.update(post.getTitle(), post.getBody(), post.getTags());
         return new PostsResponseDto(entity);
@@ -58,6 +58,6 @@ public class PostsController {
     @DeleteMapping("/{id}")
     public void remove(@PathVariable("id") Long id) {
         postsRepository.delete(id);
-        //status = 204; No Content
+        //status = 204; No Content error: 404
     }
 }
