@@ -4,11 +4,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -19,11 +21,9 @@ public class Posts {
     @Id @GeneratedValue
     private Long id;
 
-    @NotNull
     @Column(length = 500)
     private String title;
 
-    @NotNull
     @Column(columnDefinition = "TEXT")
     private String body;
 
