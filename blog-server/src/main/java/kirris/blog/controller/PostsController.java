@@ -40,7 +40,8 @@ public class PostsController { //try/catch가 필요한가...?
         if(page < 1)
             throw new BadRequestException();
 
-        int countPosts = Math.toIntExact(postsRepository.countAll());
+        int countPosts = postsRepository.countAll() % 9 == 0 ?
+                Math.toIntExact(postsRepository.countAll()) / 9 : Math.toIntExact(postsRepository.countAll() / 9 + 1);
         response.addIntHeader("Last-Page",  countPosts);
         //http 커스텀 헤더 last-page 설정
 
