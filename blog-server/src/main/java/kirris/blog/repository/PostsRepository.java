@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
@@ -50,5 +51,10 @@ public class PostsRepository {
 //            return false;
 //        }
         em.remove(post.get(0));
+    }
+
+    public Long countAll() {
+        Query query = em.createQuery("SELECT COUNT(p) from Posts p");
+        return (Long)query.getSingleResult();
     }
 }
