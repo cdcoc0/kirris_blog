@@ -17,11 +17,11 @@ public class PostsRepository {
 
     private final EntityManager em;
 
-    public Long save(PostsRequestDto posts) {
+    public Posts save(PostsRequestDto posts) {
         Posts post = posts.toEntity();
         em.persist(post);
         em.flush();
-        return post.getId();
+        return post;
     }
 
     public List<Posts> findAll(int page) {
