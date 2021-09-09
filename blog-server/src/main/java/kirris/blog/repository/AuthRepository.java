@@ -1,6 +1,7 @@
 package kirris.blog.repository;
 
 import kirris.blog.domain.auth.Auth;
+import kirris.blog.domain.auth.AuthRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,5 +18,9 @@ public class AuthRepository {
         return em.createQuery("SELECT m from member m where m.username = :username", Auth.class)
                 .setParameter("username", username)
                 .getResultList();
+    }
+
+    public void save(AuthRequestDto authRequest) {
+        em.persist(authRequest.toEntity());
     }
 }

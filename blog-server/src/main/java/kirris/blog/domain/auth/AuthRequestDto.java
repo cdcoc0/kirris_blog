@@ -17,7 +17,7 @@ public class AuthRequestDto {
     @NotNull(message = "비밀번호를 입력하세요.")
     private String password;
 
-    @NotNull(message = "비밀번호를 확인해주세요.")
+    //@NotNull(message = "비밀번호를 확인해주세요.")
     private String confirmPassword;
 
     @Builder
@@ -32,5 +32,9 @@ public class AuthRequestDto {
                 .username(username)
                 .password(password)
                 .build();
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

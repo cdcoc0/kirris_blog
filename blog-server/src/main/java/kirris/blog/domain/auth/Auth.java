@@ -38,7 +38,4 @@ public class Auth {
         this.username = username;
         this.password = password;
     }
-
-    //setHashedPassword
-
 }

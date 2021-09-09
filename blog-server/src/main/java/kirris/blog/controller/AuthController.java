@@ -20,12 +20,12 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public void register(@Valid @RequestBody AuthRequestDto auth, BindingResult result) {
+    public void register(@Valid @RequestBody AuthRequestDto authRequest, BindingResult result) {
         //validate
         if(result.hasErrors())
             throw new BadRequestException();
 
-        authService.register(auth);
+        authService.register(authRequest);
         //check exist
 
         //save entity
