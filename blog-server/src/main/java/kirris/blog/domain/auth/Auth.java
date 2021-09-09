@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,5 +38,12 @@ public class Auth {
     public Auth(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public AuthResponseDto deletePassword() {
+        return AuthResponseDto.builder()
+                .id(id)
+                .username(username)
+                .build();
     }
 }

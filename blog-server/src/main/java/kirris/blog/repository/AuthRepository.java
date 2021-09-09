@@ -2,6 +2,7 @@ package kirris.blog.repository;
 
 import kirris.blog.domain.auth.Auth;
 import kirris.blog.domain.auth.AuthRequestDto;
+import kirris.blog.domain.auth.AuthResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +21,11 @@ public class AuthRepository {
                 .getResultList();
     }
 
-    public void save(AuthRequestDto authRequest) {
-        em.persist(authRequest.toEntity());
+    public AuthResponseDto save(AuthRequestDto authRequest) {
+        Auth auth = authRequest.toEntity();
+        em.persist(auth);
+        em.flush();
+
+        return auth.deletePassword();
     }
 }

@@ -1,10 +1,12 @@
 package kirris.blog.controller;
 
 import kirris.blog.domain.auth.AuthRequestDto;
+import kirris.blog.domain.auth.AuthResponseDto;
 import kirris.blog.exception.BadRequestException;
 import kirris.blog.repository.AuthRepository;
 import kirris.blog.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,17 +27,13 @@ public class AuthController {
         if(result.hasErrors())
             throw new BadRequestException();
 
-        authService.register(authRequest);
         //check exist
-
-        //save entity
-        //password? hashed password
+        //hash password, save entity
+        //get userinfo except password
+        AuthResponseDto authResponse = authService.register(authRequest);
 
         //토큰 발급
-
         //cookie set
-
-        //Service? Entity?//
     }
 
     @PostMapping("/login")

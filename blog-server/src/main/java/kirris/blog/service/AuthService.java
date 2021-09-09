@@ -2,6 +2,7 @@ package kirris.blog.service;
 
 import kirris.blog.domain.auth.Auth;
 import kirris.blog.domain.auth.AuthRequestDto;
+import kirris.blog.domain.auth.AuthResponseDto;
 import kirris.blog.exception.ConflictException;
 import kirris.blog.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,20 +21,14 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void register(AuthRequestDto authRequest) {
+    public AuthResponseDto register(AuthRequestDto authRequest) {
         //check exist
         checkExist(authRequest);
 
         //encrypt password, save entity
+        //return without password
         setPassword(authRequest);
-        authRepository.save(authRequest);
-
-        //
-
-        //토큰 발급
-
-        //cookie set
-
+        return authRepository.save(authRequest);
     }
 
     private void checkExist(AuthRequestDto auth) {
