@@ -1,5 +1,6 @@
-package kirris.blog.domain;
+package kirris.blog.domain.posts;
 
+import kirris.blog.domain.posts.Posts;
 import lombok.Getter;
 
 @Getter

@@ -1,9 +1,9 @@
-package kirris.blog.domain;
+package kirris.blog.domain.posts;
 
+import kirris.blog.domain.posts.Posts;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

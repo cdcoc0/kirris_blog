@@ -1,11 +1,11 @@
 package kirris.blog.controller;
 
-import kirris.blog.domain.Posts;
+import kirris.blog.domain.posts.Posts;
 import kirris.blog.exception.BadRequestException;
 import kirris.blog.exception.NotFoundException;
 import kirris.blog.service.PostsService;
-import kirris.blog.domain.PostsRequestDto;
-import kirris.blog.domain.PostsResponseDto;
+import kirris.blog.domain.posts.PostsRequestDto;
+import kirris.blog.domain.posts.PostsResponseDto;
 import kirris.blog.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,17 +21,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RestController
 public class PostsController { //try/catch가 필요한가...?
+
     private final PostsService postsService;
     private final PostsRepository postsRepository;
-
 
     //포스트 등록
     @Transactional
     @PostMapping("/")
     public ResponseEntity<PostsResponseDto> write(@Valid @RequestBody PostsRequestDto posts, BindingResult result) {
-        if(result.hasErrors()) {
+        if(result.hasErrors())
             throw new BadRequestException();
-        }
 
         return ResponseEntity.ok().body(new PostsResponseDto(postsRepository.save(posts)));
         //return postsRepository.save(posts);
@@ -53,17 +51,14 @@ public class PostsController { //try/catch가 필요한가...?
         headers.add("Last-Page", countPosts);
         //response.addIntHeader("Last-Page",  countPosts);
 
-
         //==내용 길이 제한 필요==//
+
 
         List<PostsResponseDto> responseBody = postsRepository.findAll(page).stream()
                                                 .map(PostsResponseDto::new)
                                                 .collect(Collectors.toList());
 
         return ResponseEntity.ok().headers(headers).body(responseBody);
-        /*return postsRepository.findAll(page).stream()
-                .map(PostsResponseDto::new)
-                .collect(Collectors.toList());*/
     }
 
     //포스트 읽기
@@ -97,7 +92,7 @@ public class PostsController { //try/catch가 필요한가...?
     @DeleteMapping("/{id}")
     public ResponseEntity remove(@PathVariable("id") Long id) {
         postsRepository.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build(); //204
         //return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

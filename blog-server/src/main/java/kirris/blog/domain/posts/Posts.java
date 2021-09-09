@@ -1,4 +1,4 @@
-package kirris.blog.domain;
+package kirris.blog.domain.posts;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -19,10 +19,10 @@ public class Posts {
     @Column(name = "post_id")
     private Long id;
 
-    @Column(length = 500)
+    @Column(length = 500, nullable = false)
     private String title;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String body;
 
     private String tags; //이게 수정이 될 지...? HashMap / ArrayList

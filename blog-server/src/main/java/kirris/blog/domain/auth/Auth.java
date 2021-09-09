@@ -1,0 +1,40 @@
+package kirris.blog.domain.auth;
+
+import lombok.Builder;
+import lombok.Getter;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Getter
+//@Entity
+public class Auth {
+
+    @Id @GeneratedValue
+    @Column(name = "member_id")
+    private Long id;
+
+//    @NotNull(message = "아이디를 입력하세요.")
+    @Size(min = 3, max = 20)
+    @Column(length = 20, nullable = false)
+    private String username;
+
+//    @NotNull(message = "비밀번호를 입력하세요.")
+    @Size(min = 6)
+    @Column(nullable = false)
+    private String password;
+
+    //==post랑 엔티티 조인 필요==//
+
+    @Builder
+    public Auth(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    //
+}

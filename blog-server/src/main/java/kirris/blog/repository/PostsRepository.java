@@ -1,7 +1,7 @@
 package kirris.blog.repository;
 
-import kirris.blog.domain.Posts;
-import kirris.blog.domain.PostsRequestDto;
+import kirris.blog.domain.posts.Posts;
+import kirris.blog.domain.posts.PostsRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
