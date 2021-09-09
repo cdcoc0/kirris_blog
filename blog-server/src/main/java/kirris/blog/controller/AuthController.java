@@ -3,6 +3,7 @@ package kirris.blog.controller;
 import kirris.blog.domain.auth.AuthRequestDto;
 import kirris.blog.exception.BadRequestException;
 import kirris.blog.repository.AuthRepository;
+import kirris.blog.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 @RestController
 public class AuthController {
     private final AuthRepository authRepository;
+    private final AuthService authService;
 
     @PostMapping("/register")
     public void register(@Valid @RequestBody AuthRequestDto auth, BindingResult result) {
@@ -23,6 +25,7 @@ public class AuthController {
         if(result.hasErrors())
             throw new BadRequestException();
 
+        authService.register(auth);
         //check exist
 
         //save entity

@@ -1,7 +1,9 @@
 package kirris.blog.domain.auth;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +13,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
-//@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity(name = "member")
 public class Auth {
 
     @Id @GeneratedValue
@@ -20,7 +23,7 @@ public class Auth {
 
 //    @NotNull(message = "아이디를 입력하세요.")
     @Size(min = 3, max = 20)
-    @Column(length = 20, nullable = false)
+    @Column(length = 20, nullable = false, unique = true)
     private String username;
 
 //    @NotNull(message = "비밀번호를 입력하세요.")
@@ -36,5 +39,6 @@ public class Auth {
         this.password = password;
     }
 
-    //
+    //setHashedPassword
+
 }

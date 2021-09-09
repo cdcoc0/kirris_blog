@@ -22,4 +22,11 @@ public class ExceptionController {
     String BadRequestHandler(BadRequestException badRequest) {
         return badRequest.getMessage();
     }
+
+    @ResponseBody
+    @ExceptionHandler(ConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    String ConflictHandler(ConflictException conflict) {
+        return conflict.getMessage();
+    }
 }
