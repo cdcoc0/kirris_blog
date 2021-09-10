@@ -30,6 +30,7 @@ import javax.validation.Valid;
 public class AuthController {
     private final AuthRepository authRepository;
     private final AuthService authService;
+    private final JwtToken jwtToken;
 
     @PostMapping("/register")
     public ResponseEntity register(@Valid @RequestBody AuthRequestDto authRequest, BindingResult result) {
@@ -41,7 +42,7 @@ public class AuthController {
         AuthResponseDto authResponse = authService.register(authRequest);
 
         //generate token, set cookie
-        ResponseCookie cookie = ResponseCookie.from("access_token", new JwtToken().generateToken(authResponse))
+        ResponseCookie cookie = ResponseCookie.from("access_token", jwtToken.generateToken(authResponse))
                 .httpOnly(true)
                 .maxAge(60 * 60 * 24 * 7) //
                 .build();
@@ -66,7 +67,7 @@ public class AuthController {
         AuthResponseDto authResponse = authService.login(authRequest);
 
         //generate token and set cookie
-        ResponseCookie cookie = ResponseCookie.from("access_token", new JwtToken().generateToken(authResponse))
+        ResponseCookie cookie = ResponseCookie.from("access_token", jwtToken.generateToken(authResponse))
                 .httpOnly(true)
                 .maxAge(60 * 60 * 24 * 7)
                 .build();

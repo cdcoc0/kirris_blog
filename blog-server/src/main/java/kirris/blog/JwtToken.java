@@ -6,21 +6,26 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import kirris.blog.domain.auth.Auth;
 import kirris.blog.domain.auth.AuthResponseDto;
+import kirris.blog.repository.AuthRepository;
+import kirris.blog.service.AuthService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.Date;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Component
 public class JwtToken {
+
+    private final AuthRepository authRepository;
 
     private String secretKey = "krblogjsonwebtoken";
     private long tokenValidTime = 1000L * 60 * 60 * 24 * 7; //유효기간 7일
@@ -45,10 +50,10 @@ public class JwtToken {
     }
 
     //JWT 토큰에서 인증 정보 조회
-    /*public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = authRepository.findByUsername(this.getUserInfo(token)).get(0);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    }*/
+    }
 
     //JWT 토큰에서 회원 정보 추출
     public String getUserInfo(String token) {
@@ -56,9 +61,16 @@ public class JwtToken {
     }
 
     //Request의 Header에서 token 가져오기
-    /*public String resolveToken(HttpServletRequest request) {
-        return request.getHeader("X-AUTH-TOKEN");
-    }*/
+    public String resolveToken(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        for(Cookie cookie : cookies) {
+            if(cookie.getName() == "access_token")
+                return cookie.getValue();
+        }
+        return "";
+//        return request.getCookies().
+//                getHeader("X-AUTH-TOKEN");
+    }
 
     //토큰 유효성 + 만료일자 확인
     public boolean validateToken(String jwtToken) {
@@ -69,20 +81,5 @@ public class JwtToken {
             return false;
         }
     }
+    //3일 이하로 남은 경우 재연장
 }
-
-/*
-UserSchema.methods.generateToken = function() {
-        //파라미터 1)토큰 안에 넣을 데이터, 2)JWT 암호, 3)기타 옵션
-        const token = jwt.sign(
-        {
-        _id: this.id,
-        username: this.username
-        },
-        process.env.JWT_SECRET,
-        {
-        expiresIn: '7d' //7일동안 유효
-        }
-        );
-        return token;
-        }*/
