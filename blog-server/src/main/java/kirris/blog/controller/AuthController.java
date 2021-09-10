@@ -9,6 +9,7 @@ import kirris.blog.exception.UnauthorizedException;
 import kirris.blog.repository.AuthRepository;
 import kirris.blog.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -43,7 +43,7 @@ public class AuthController {
         //generate token, set cookie
         ResponseCookie cookie = ResponseCookie.from("access_token", new JwtToken().generateToken(authResponse))
                 .httpOnly(true)
-                .maxAge(60 * 60 * 24 * 7) //==확인 필요== 1000 빼면?//
+                .maxAge(60 * 60 * 24 * 7) //
                 .build();
 
 //        (HttpServletResponse response)
@@ -53,7 +53,6 @@ public class AuthController {
 //        response.addCookie(cookie);
 
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(authResponse);
-
     }
 
     @PostMapping("/login")
@@ -76,10 +75,15 @@ public class AuthController {
     }
 
     @GetMapping("/check")
-    public void check() {}
+    public ResponseEntity check() {
+        return ResponseEntity.ok().build();
 
-    @PostMapping("/logout")
-    public void logout() {
+    }
+
+    @PostMapping("/out") //왜 logout 에러?
+    public ResponseEntity logout() {
         //쿠키에서 토큰 삭제
+        ResponseCookie cookie = ResponseCookie.from("access_token", "").build();
+        return ResponseEntity.noContent().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
     }
 }
