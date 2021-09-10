@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+//response entity로 바꿀?
 @ControllerAdvice
 public class ExceptionController {
 
@@ -28,5 +29,12 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.CONFLICT)
     String ConflictHandler(ConflictException conflict) {
         return conflict.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    String UnauthorizedHandler(UnauthorizedException unauthorized) {
+        return unauthorized.getMessage();
     }
 }

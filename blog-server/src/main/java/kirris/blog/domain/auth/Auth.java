@@ -39,10 +39,16 @@ public class Auth {
         this.password = password;
     }
 
+    //비밀번호 제외 유저 정보 반환
     public AuthResponseDto deletePassword() {
         return AuthResponseDto.builder()
                 .id(id)
                 .username(username)
                 .build();
+    }
+
+    //비밀번호 확인
+    public boolean matchPassword(String confirmPassword) {
+        return true;
     }
 }

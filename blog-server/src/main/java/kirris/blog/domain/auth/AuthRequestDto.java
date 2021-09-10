@@ -18,13 +18,13 @@ public class AuthRequestDto {
     private String password;
 
     //@NotNull(message = "비밀번호를 확인해주세요.")
-    private String confirmPassword;
+//    private String confirmPassword; //클라이언트에서 처리
 
     @Builder
-    public AuthRequestDto(String username, String password, String confirmPassword) {
+    public AuthRequestDto(String username, String password) {
         this.username = username;
         this.password = password;
-        this.confirmPassword = confirmPassword;
+//        this.confirmPassword = confirmPassword;
     }
 
     public Auth toEntity() {
