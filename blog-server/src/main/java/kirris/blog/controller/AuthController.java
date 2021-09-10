@@ -10,18 +10,14 @@ import kirris.blog.repository.AuthRepository;
 import kirris.blog.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -76,9 +72,14 @@ public class AuthController {
     }
 
     @GetMapping("/check")
-    public ResponseEntity check() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity check(HttpServletRequest request) {
+        String token = jwtToken.resolveToken(request);
+        if(token.equals("") || !jwtToken.validateToken(token))
+            throw new UnauthorizedException("not signed in");
 
+        //토큰이 유효하면 토큰으로부터 유저 정보 가져오기
+        Authentication authentication = jwtToken.getAuthentication(token);
+        return ResponseEntity.ok().body(authentication);
     }
 
     @PostMapping("/out") //왜 logout 에러?

@@ -64,7 +64,7 @@ public class JwtToken {
     public String resolveToken(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         for(Cookie cookie : cookies) {
-            if(cookie.getName() == "access_token")
+            if(cookie.getName().equals("access_token"))
                 return cookie.getValue();
         }
         return "";
