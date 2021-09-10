@@ -1,11 +1,14 @@
 package kirris.blog.controller;
 
+import kirris.blog.JwtToken;
 import kirris.blog.domain.auth.AuthRequestDto;
 import kirris.blog.domain.auth.AuthResponseDto;
 import kirris.blog.exception.BadRequestException;
 import kirris.blog.repository.AuthRepository;
 import kirris.blog.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
@@ -22,18 +27,27 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public void register(@Valid @RequestBody AuthRequestDto authRequest, BindingResult result) {
+    public ResponseEntity register(@Valid @RequestBody AuthRequestDto authRequest, BindingResult result, HttpServletResponse response) {
         //validate
         if(result.hasErrors())
             throw new BadRequestException();
 
-        //check exist
-        //hash password, save entity
-        //get userinfo except password
+        //save, get userinfo except password
         AuthResponseDto authResponse = authService.register(authRequest);
 
-        //토큰 발급
-        //cookie set
+        //generate token, set cookie
+        ResponseCookie cookie = ResponseCookie.from("access_token", new JwtToken().generateToken(authResponse))
+                .httpOnly(true)
+                .maxAge(1000L * 60 * 60 * 24 * 7)
+                .build();
+
+//        Cookie cookie = new Cookie("access_token", new JwtToken().generateToken(authResponse));
+//        cookie.setHttpOnly(true);
+//        cookie.setMaxAge(1000 * 60 * 60 * 24 * 7);
+//        response.addCookie(cookie);
+
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(authResponse);
+
     }
 
     @PostMapping("/login")

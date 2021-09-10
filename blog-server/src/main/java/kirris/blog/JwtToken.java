@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import kirris.blog.domain.auth.Auth;
+import kirris.blog.domain.auth.AuthResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,15 +32,15 @@ public class JwtToken {
     }
 
     //Token 생성
-    public String generateToken(Long id, String username) {
-        Claims claims = Jwts.claims().setSubject(username); //JWT payload 에 저장되는 정보단위
-        claims.put("id", id);
+    public String generateToken(AuthResponseDto userInfo) {
+        Claims claims = Jwts.claims().setSubject(userInfo.getUsername()); //JWT payload 에 저장되는 정보단위
+        claims.put("id", userInfo.getId());
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims) //정보 저장
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + tokenValidTime))
-                .signWith(SignatureAlgorithm.ES256, secretKey)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 

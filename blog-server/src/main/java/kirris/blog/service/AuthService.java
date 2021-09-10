@@ -22,11 +22,7 @@ public class AuthService {
 
     @Transactional
     public AuthResponseDto register(AuthRequestDto authRequest) {
-        //check exist
         checkExist(authRequest);
-
-        //encrypt password, save entity
-        //return without password
         setPassword(authRequest);
         return authRepository.save(authRequest);
     }
