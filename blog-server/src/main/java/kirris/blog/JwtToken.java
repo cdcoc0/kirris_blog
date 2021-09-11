@@ -60,27 +60,30 @@ public class JwtToken {
     //JWT 토큰에서 회원 정보 추출
     public AuthResponseDto getUserInfo(String token) {
 //        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-        String getUserId = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getId();
-        if(getUserId.equals(null))
+        String username = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        List<Auth> user = authRepository.findByUsername(username);
+        if(user.isEmpty())
+//            throw new UnauthorizedException("user not exists: username = " + username);
             return null;
-        Long id = Long.parseLong(getUserId);
-        Auth user = authRepository.findById(id)
-                .orElseThrow(() -> new UnauthorizedException("user not exist id = " + id));
-        return user.deletePassword();
+        return user.get(0).deletePassword();
     }
 
     //Request의 Header에서 token 가져오기
     public String resolveToken(HttpServletRequest request) {
-        Optional<Cookie[]> cookies = Optional.ofNullable(request.getCookies());
-        if(!cookies.isEmpty()) {
-            for (Cookie cookie : cookies.get()) {
-                if (cookie.getName().equals("access_token"))
-                    return cookie.getValue();
+        if(request.getCookies() != null) {
+            Cookie[] cookies = request.getCookies();
+
+            if (cookies.length != 0) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("access_token"))
+                        return cookie.getValue();
+                }
             }
         }
+
         return "";
-//        return request.getCookies().
-//                getHeader("X-AUTH-TOKEN");
+
+//        return request.getHeader("X-AUTH-TOKEN");
     }
 
     //토큰 유효성 + 만료일자 확인

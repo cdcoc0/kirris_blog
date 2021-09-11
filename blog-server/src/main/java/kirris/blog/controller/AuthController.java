@@ -73,13 +73,15 @@ public class AuthController {
 
     @GetMapping("/check")
     public ResponseEntity check(HttpServletRequest request) {
-        String token = jwtToken.resolveToken(request);
-        if(token.equals("") || !jwtToken.validateToken(token))
-            throw new UnauthorizedException("not signed in");
+        //header에서 유저 정보 가져오기
+        if(request.getHeader("user_username") == null)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
-        //토큰이 유효하면 토큰으로부터 유저 정보 가져오기
-        AuthResponseDto userInfo = jwtToken.getUserInfo(token);
-        return ResponseEntity.ok().body(userInfo);
+        Long id = Long.parseLong(request.getHeader("user_id"));
+        String username = request.getHeader("user_username");
+        AuthResponseDto authResponse = AuthResponseDto.builder().id(id).username(username).build();
+
+        return ResponseEntity.ok().body(authResponse);
     }
 
     @PostMapping("/out") //왜 logout 에러?
