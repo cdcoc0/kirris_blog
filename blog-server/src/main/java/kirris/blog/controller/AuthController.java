@@ -78,8 +78,8 @@ public class AuthController {
             throw new UnauthorizedException("not signed in");
 
         //토큰이 유효하면 토큰으로부터 유저 정보 가져오기
-        Authentication authentication = jwtToken.getAuthentication(token);
-        return ResponseEntity.ok().body(authentication);
+        AuthResponseDto userInfo = jwtToken.getUserInfo(token);
+        return ResponseEntity.ok().body(userInfo);
     }
 
     @PostMapping("/out") //왜 logout 에러?

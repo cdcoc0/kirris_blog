@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import kirris.blog.domain.auth.Auth;
 import kirris.blog.domain.auth.AuthResponseDto;
+import kirris.blog.exception.BadRequestException;
 import kirris.blog.repository.AuthRepository;
 import kirris.blog.service.AuthService;
 import lombok.NoArgsConstructor;
@@ -50,14 +51,18 @@ public class JwtToken {
     }
 
     //JWT 토큰에서 인증 정보 조회
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = authRepository.findByUsername(this.getUserInfo(token)).get(0);
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    }
+//    public Authentication getAuthentication(String token) {
+//        UserDetails userDetails = authRepository.findByUsername(this.getUserInfo(token)).get(0);
+//        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+//    }
 
     //JWT 토큰에서 회원 정보 추출
-    public String getUserInfo(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    public AuthResponseDto getUserInfo(String token) {
+//        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        Long id = Long.valueOf(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getId());
+        Auth user = authRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException());
+        return user.deletePassword();
     }
 
     //Request의 Header에서 token 가져오기

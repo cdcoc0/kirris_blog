@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -27,5 +28,10 @@ public class AuthRepository {
         em.flush();
 
         return auth.deletePassword();
+    }
+
+    public Optional<Auth> findById(Long id) {
+        Auth user = em.find(Auth.class, id);
+        return Optional.ofNullable(user);
     }
 }
