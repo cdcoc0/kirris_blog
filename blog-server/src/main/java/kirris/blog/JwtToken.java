@@ -7,6 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import kirris.blog.domain.auth.Auth;
 import kirris.blog.domain.auth.AuthResponseDto;
 import kirris.blog.exception.BadRequestException;
+import kirris.blog.exception.UnauthorizedException;
 import kirris.blog.repository.AuthRepository;
 import kirris.blog.service.AuthService;
 import lombok.NoArgsConstructor;
@@ -59,18 +60,23 @@ public class JwtToken {
     //JWT 토큰에서 회원 정보 추출
     public AuthResponseDto getUserInfo(String token) {
 //        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-        Long id = Long.valueOf(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getId());
+        String getUserId = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getId();
+        if(getUserId.equals(null))
+            return null;
+        Long id = Long.parseLong(getUserId);
         Auth user = authRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException());
+                .orElseThrow(() -> new UnauthorizedException("user not exist id = " + id));
         return user.deletePassword();
     }
 
     //Request의 Header에서 token 가져오기
     public String resolveToken(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        for(Cookie cookie : cookies) {
-            if(cookie.getName().equals("access_token"))
-                return cookie.getValue();
+        Optional<Cookie[]> cookies = Optional.ofNullable(request.getCookies());
+        if(!cookies.isEmpty()) {
+            for (Cookie cookie : cookies.get()) {
+                if (cookie.getName().equals("access_token"))
+                    return cookie.getValue();
+            }
         }
         return "";
 //        return request.getCookies().
