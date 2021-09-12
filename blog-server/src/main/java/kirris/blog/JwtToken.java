@@ -95,5 +95,14 @@ public class JwtToken {
             return false;
         }
     }
+
     //3일 이하로 남은 경우 재연장
+    public void refreshToken(String jwtToken) {
+        long now = (new Date()).getTime();
+        long refresh = 1000 * 60 * 60 * 24 * 3;
+
+        Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
+        if(claims.getBody().getExpiration().before(new Date(now + refresh)))
+            claims.getBody().setExpiration(new Date(now + tokenValidTime));
+    }
 }

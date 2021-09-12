@@ -40,7 +40,7 @@ public class AuthController {
         //generate token, set cookie
         ResponseCookie cookie = ResponseCookie.from("access_token", jwtToken.generateToken(authResponse))
                 .httpOnly(true)
-                .maxAge(60 * 60 * 24 * 7) //
+                .maxAge(60 * 60 * 24 * 7)
                 .build();
 
 //        (HttpServletResponse response)
