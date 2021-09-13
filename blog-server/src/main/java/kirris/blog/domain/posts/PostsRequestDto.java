@@ -1,5 +1,6 @@
 package kirris.blog.domain.posts;
 
+import kirris.blog.domain.auth.Auth;
 import kirris.blog.domain.posts.Posts;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,13 +18,17 @@ public class PostsRequestDto {
 
     @NotEmpty(message = "내용을 입력해주세요.")
     private String body;
+
     private String tags;
 
+    private Auth auth;
+
     @Builder
-    public PostsRequestDto(String title, String body, String tags) {
+    public PostsRequestDto(String title, String body, String tags, Auth auth) {
         this.title = title;
         this.body = body;
         this.tags = tags;
+        this.auth = auth;
     }
 
     public Posts toEntity() {
@@ -31,6 +36,7 @@ public class PostsRequestDto {
                 .title(title)
                 .body(body)
                 .tags(tags)
+                .auth(auth)
                 .build();
     }
 }

@@ -27,16 +27,18 @@ public class Posts {
 
     private String tags; //이게 수정이 될 지...? HashMap / ArrayList
 
+    //다대일 단방향
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private Auth auth;
 
     @Builder
-    public Posts(Long id, String title, String body, String tags) {
+    public Posts(Long id, String title, String body, String tags, Auth auth) {
         this.id = id;
         this.title = title;
         this.body = body;
         this.tags = tags;
+        this.auth = auth;
     }
 
     public void update(String title, String body, String tags) {

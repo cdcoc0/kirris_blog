@@ -9,17 +9,13 @@ import kirris.blog.exception.UnauthorizedException;
 import kirris.blog.repository.AuthRepository;
 import kirris.blog.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.*;
-import org.springframework.security.core.Authentication;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -72,16 +68,12 @@ public class AuthController {
     }
 
     @GetMapping("/check")
-    public ResponseEntity check(HttpServletRequest request) {
+    public ResponseEntity check(/*HttpServletRequest request*/@RequestAttribute(name = "user", required = false) AuthResponseDto user) {
         //header에서 유저 정보 가져오기
-        if(request.getHeader("user_username") == null)
+        if(user == null)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
-        Long id = Long.parseLong(request.getHeader("user_id"));
-        String username = request.getHeader("user_username");
-        AuthResponseDto authResponse = AuthResponseDto.builder().id(id).username(username).build();
-
-        return ResponseEntity.ok().body(authResponse);
+        return ResponseEntity.ok().body(user);
     }
 
     @PostMapping("/out") //왜 logout 에러?

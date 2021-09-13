@@ -14,11 +14,14 @@ public class CheckLoggedInInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws IOException /*JwtException*/ {
-        if(request.getHeader("user_id") == null) {
+        /*if(request.getHeader("user_id") == null) {
+            response.setStatus(401);
+            return false;
+        }*/
+        if(request.getAttribute("user") == null) {
             response.setStatus(401);
             return false;
         }
-
         return true;
     }
 }

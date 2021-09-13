@@ -17,7 +17,7 @@ public class AuthRepository {
     private final EntityManager em;
 
     public List<Auth> findByUsername(String username) {
-        return em.createQuery("SELECT m from member m where m.username = :username", Auth.class)
+        return em.createQuery("SELECT u from user u where u.username = :username", Auth.class)
                 .setParameter("username", username)
                 .getResultList();
     }

@@ -34,8 +34,6 @@ public class Auth{
     private String password;
 
     //==post랑 엔티티 조인 필요==//
-    @OneToMany(mappedBy = "auth")
-    private List<Posts> posts;
 
     @Builder
     public Auth(String username, String password) {
