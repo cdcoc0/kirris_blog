@@ -1,14 +1,14 @@
 package kirris.blog.domain.posts;
 
+import kirris.blog.domain.auth.Auth;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,6 +26,10 @@ public class Posts {
     private String body;
 
     private String tags; //이게 수정이 될 지...? HashMap / ArrayList
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private Auth auth;
 
     @Builder
     public Posts(Long id, String title, String body, String tags) {

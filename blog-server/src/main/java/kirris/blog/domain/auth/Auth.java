@@ -1,5 +1,6 @@
 package kirris.blog.domain.auth;
 
+import kirris.blog.domain.posts.Posts;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,21 +8,19 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name = "member")
+@Entity(name = "user")
 public class Auth{
 
     @Id @GeneratedValue
-    @Column(name = "member_id")
+    @Column(name = "user_id")
     private Long id;
 
 //    @NotNull(message = "아이디를 입력하세요.")
@@ -35,6 +34,8 @@ public class Auth{
     private String password;
 
     //==post랑 엔티티 조인 필요==//
+    @OneToMany(mappedBy = "auth")
+    private List<Posts> posts;
 
     @Builder
     public Auth(String username, String password) {

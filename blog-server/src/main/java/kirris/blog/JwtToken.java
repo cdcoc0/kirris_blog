@@ -6,21 +6,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import kirris.blog.domain.auth.Auth;
 import kirris.blog.domain.auth.AuthResponseDto;
-import kirris.blog.exception.BadRequestException;
-import kirris.blog.exception.UnauthorizedException;
 import kirris.blog.repository.AuthRepository;
-import kirris.blog.service.AuthService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 @RequiredArgsConstructor

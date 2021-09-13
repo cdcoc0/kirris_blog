@@ -27,7 +27,7 @@ public class PostsController { //try/catch가 필요한가...?
 
     //포스트 등록
     @Transactional
-    @PostMapping("/")
+    @PostMapping("/write")
     public ResponseEntity<PostsResponseDto> write(@Valid @RequestBody PostsRequestDto posts, BindingResult result) {
         if(result.hasErrors())
             throw new BadRequestException();
@@ -63,7 +63,7 @@ public class PostsController { //try/catch가 필요한가...?
 
     //포스트 읽기
     @Transactional(readOnly = true)
-    @GetMapping("/{id}")
+    @GetMapping("/read/{id}")
     public ResponseEntity<PostsResponseDto> read(@PathVariable("id") Long id) {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() ->
