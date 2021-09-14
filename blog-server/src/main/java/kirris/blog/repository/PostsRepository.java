@@ -3,6 +3,7 @@ package kirris.blog.repository;
 import kirris.blog.domain.auth.Auth;
 import kirris.blog.domain.posts.Posts;
 import kirris.blog.domain.posts.PostsRequestDto;
+import kirris.blog.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -31,7 +32,6 @@ public class PostsRepository {
                 .setFirstResult((page - 1) * 9)
                 .setMaxResults(9)
                 .getResultList();
-        //last-page 전달?
     }
 
     public Optional<Posts> findById(Long id) {
@@ -39,19 +39,14 @@ public class PostsRepository {
         return Optional.ofNullable(post);
     }
 
-    /*public Posts update(Long id, PostsRequestDto post) {
-        Posts targetPost = em.find(Posts.class, id);
-        return em.merge(targetPost.builder().id(id).title(post.getTitle()).body(post.getBody()).tags(post.getTags()).build());
-    }*/
-
     public void delete(Long id) {
         TypedQuery<Posts> query = em.createQuery("SELECT p from Posts p WHERE p.id = :id", Posts.class);
         query.setParameter("id", id);
 
         List<Posts> post = query.getResultList();
-//        if(post.size() != 1) {
-//            return false;
-//        }
+        if(post.size() != 1) {
+            throw new NotFoundException(id);
+        }
         em.remove(post.get(0));
     }
 

@@ -25,9 +25,8 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
-public class PostsController { //try/catch가 필요한가...?
+public class PostsController {
 
-    private final PostsService postsService;
     private final PostsRepository postsRepository;
     private final AuthRepository authRepository;
 
@@ -43,8 +42,6 @@ public class PostsController { //try/catch가 필요한가...?
                 .orElseThrow(() -> new UnauthorizedException("user not found"));
 
         return ResponseEntity.ok().body(new PostsResponseDto(postsRepository.save(posts, userInfo)));
-        //return postsRepository.save(posts);
-        //500 Internal Server Error(try/catch)
     }
 
     //포스트 목록
@@ -58,8 +55,7 @@ public class PostsController { //try/catch가 필요한가...?
         String countPosts = postsRepository.countAll() % 9 == 0 ?
                 String.valueOf(postsRepository.countAll() / 9) : String.valueOf(postsRepository.countAll() / 9 + 1);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Last-Page", countPosts);
-        //response.addIntHeader("Last-Page",  countPosts);
+        headers.add("Last-Page", countPosts); //String으로 저장
 
         //==내용 길이 제한 필요==//
 
@@ -80,7 +76,6 @@ public class PostsController { //try/catch가 필요한가...?
                         new NotFoundException(id));
 
         return ResponseEntity.ok().body(new PostsResponseDto(entity));
-        //return new PostsResponseDto(entity);
     }
 
     //포스트 수정
@@ -93,7 +88,6 @@ public class PostsController { //try/catch가 필요한가...?
 
         entity.update(post.getTitle(), post.getBody(), post.getTags());
         return ResponseEntity.ok().body(new PostsResponseDto(entity));
-        //return new PostsResponseDto(entity);
         //merge 지양
     }
 
@@ -103,6 +97,5 @@ public class PostsController { //try/catch가 필요한가...?
     public ResponseEntity remove(@PathVariable("id") Long id) {
         postsRepository.delete(id);
         return ResponseEntity.noContent().build(); //204
-        //return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

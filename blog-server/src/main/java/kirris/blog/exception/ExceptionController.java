@@ -1,40 +1,34 @@
 package kirris.blog.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-//response entity로 바꿀?
 @ControllerAdvice
 public class ExceptionController {
 
-    @ResponseBody
     @ExceptionHandler(NotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    String NotFoundHandler(NotFoundException notFound) {
-        return notFound.getMessage();
+    public ResponseEntity NotFoundHandler(NotFoundException notFound) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFound.getMessage());
     }
 
-    @ResponseBody
     @ExceptionHandler(BadRequestException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    String BadRequestHandler(BadRequestException badRequest) {
-        return badRequest.getMessage();
+    public ResponseEntity BadRequestHandler(BadRequestException badRequest) {
+        return ResponseEntity.badRequest().body(badRequest.getMessage());
     }
 
-    @ResponseBody
     @ExceptionHandler(ConflictException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    String ConflictHandler(ConflictException conflict) {
-        return conflict.getMessage();
+    public ResponseEntity ConflictHandler(ConflictException conflict) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(conflict.getMessage());
     }
 
-    @ResponseBody
     @ExceptionHandler(UnauthorizedException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    String UnauthorizedHandler(UnauthorizedException unauthorized) {
-        return unauthorized.getMessage();
+    public ResponseEntity UnauthorizedHandler(UnauthorizedException unauthorized) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(unauthorized.getMessage());
+    }
+
+    @ExceptionHandler({Exception.class}) //try catch 대신
+    public ResponseEntity InternalServerErrorHandler(final Exception ex) {
+        return ResponseEntity.internalServerError().body(ex.getMessage());
     }
 }
