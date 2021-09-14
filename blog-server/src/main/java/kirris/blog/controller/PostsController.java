@@ -1,8 +1,11 @@
 package kirris.blog.controller;
 
+import kirris.blog.domain.auth.Auth;
+import kirris.blog.domain.auth.AuthResponseDto;
 import kirris.blog.domain.posts.Posts;
 import kirris.blog.exception.BadRequestException;
 import kirris.blog.exception.NotFoundException;
+import kirris.blog.repository.AuthRepository;
 import kirris.blog.service.PostsService;
 import kirris.blog.domain.posts.PostsRequestDto;
 import kirris.blog.domain.posts.PostsResponseDto;
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,15 +28,18 @@ public class PostsController { //try/catch가 필요한가...?
 
     private final PostsService postsService;
     private final PostsRepository postsRepository;
+    private final AuthRepository authRepository;
 
     //포스트 등록
     @Transactional
-    @PostMapping("/write")
-    public ResponseEntity<PostsResponseDto> write(@Valid @RequestBody PostsRequestDto posts, BindingResult result) {
+    @PostMapping("/auth")
+    public ResponseEntity<PostsResponseDto> write(@Valid @RequestBody PostsRequestDto posts, BindingResult result,
+                                                  @RequestAttribute(name = "user", required = false) AuthResponseDto user) {
         if(result.hasErrors())
             throw new BadRequestException();
 
-        return ResponseEntity.ok().body(new PostsResponseDto(postsRepository.save(posts)));
+        Auth userInfo = authRepository.findById(user.getId());
+        return ResponseEntity.ok().body(new PostsResponseDto(postsRepository.save(posts, userInfo)));
         //return postsRepository.save(posts);
         //500 Internal Server Error(try/catch)
     }
@@ -63,7 +70,7 @@ public class PostsController { //try/catch가 필요한가...?
 
     //포스트 읽기
     @Transactional(readOnly = true)
-    @GetMapping("/read/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<PostsResponseDto> read(@PathVariable("id") Long id) {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() ->
@@ -75,7 +82,7 @@ public class PostsController { //try/catch가 필요한가...?
 
     //포스트 수정
     @Transactional
-    @PutMapping("/{id}")
+    @PutMapping("/auth/{id}")
     public ResponseEntity<PostsResponseDto> update(@PathVariable("id") Long id, @RequestBody PostsRequestDto post) {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() ->
@@ -89,7 +96,7 @@ public class PostsController { //try/catch가 필요한가...?
 
     //포스트 삭제
     @Transactional
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/auth/{id}")
     public ResponseEntity remove(@PathVariable("id") Long id) {
         postsRepository.delete(id);
         return ResponseEntity.noContent().build(); //204

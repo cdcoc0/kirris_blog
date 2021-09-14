@@ -33,17 +33,20 @@ public class Posts {
     private Auth auth;
 
     @Builder
-    public Posts(Long id, String title, String body, String tags, Auth auth) {
+    public Posts(Long id, String title, String body, String tags) {
         this.id = id;
         this.title = title;
         this.body = body;
         this.tags = tags;
-        this.auth = auth;
     }
 
     public void update(String title, String body, String tags) {
         this.title = title;
         this.body = body;
         this.tags = tags;
+    }
+
+    public void addAuth(Auth auth) {
+        this.auth = auth;
     }
 }

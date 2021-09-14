@@ -1,5 +1,6 @@
 package kirris.blog.repository;
 
+import kirris.blog.domain.auth.Auth;
 import kirris.blog.domain.posts.Posts;
 import kirris.blog.domain.posts.PostsRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,9 @@ public class PostsRepository {
 
     private final EntityManager em;
 
-    public Posts save(PostsRequestDto posts) {
+    public Posts save(PostsRequestDto posts, Auth user) {
         Posts post = posts.toEntity();
+        post.addAuth(user);
         em.persist(post);
         em.flush();
         return post;

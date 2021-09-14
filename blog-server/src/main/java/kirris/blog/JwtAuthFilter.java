@@ -44,7 +44,7 @@ public class JwtAuthFilter extends GenericFilterBean {
                 httpServletRequest.setAttribute("user", userInfo);
             }
 
-            //토큰의 유효기간이 3일 미만이면 재발급
+            //토큰의 유효기간이 3일 미만이면 재발급, //쿠키에 저장//
             jwtToken.refreshToken(token);
         }
         chain.doFilter(request, response);

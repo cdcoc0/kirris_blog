@@ -30,8 +30,7 @@ public class AuthRepository {
         return auth.deletePassword();
     }
 
-    public Optional<Auth> findById(Long id) {
-        Auth user = em.find(Auth.class, id);
-        return Optional.ofNullable(user);
+    public Auth findById(Long id) {
+        return em.find(Auth.class, id);
     }
 }
