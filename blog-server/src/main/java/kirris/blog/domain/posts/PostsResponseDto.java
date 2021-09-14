@@ -20,4 +20,12 @@ public class PostsResponseDto {
         this.tags = entity.getTags();
         this.user = entity.getAuth().deletePassword();
     }
+
+    public void shortenTitleAndBody() {
+        if(title.length() > 20)
+            title = title.substring(0, 20);
+
+        if(body.length() > 100)
+            body = body.substring(0, 100);
+    }
 }

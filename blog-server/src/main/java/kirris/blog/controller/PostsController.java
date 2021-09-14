@@ -7,7 +7,6 @@ import kirris.blog.exception.BadRequestException;
 import kirris.blog.exception.NotFoundException;
 import kirris.blog.exception.UnauthorizedException;
 import kirris.blog.repository.AuthRepository;
-import kirris.blog.service.PostsService;
 import kirris.blog.domain.posts.PostsRequestDto;
 import kirris.blog.domain.posts.PostsResponseDto;
 import kirris.blog.repository.PostsRepository;
@@ -57,12 +56,13 @@ public class PostsController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Last-Page", countPosts); //String으로 저장
 
-        //==내용 길이 제한 필요==//
-
-
         List<PostsResponseDto> responseBody = postsRepository.findAll(page).stream()
                                                 .map(PostsResponseDto::new)
+
                                                 .collect(Collectors.toList());
+
+        //==제목, 내용 길이 제한==//
+        responseBody.forEach(post -> post.shortenTitleAndBody());
 
         return ResponseEntity.ok().headers(headers).body(responseBody);
     }
