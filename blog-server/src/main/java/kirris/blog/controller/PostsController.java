@@ -5,6 +5,7 @@ import kirris.blog.domain.auth.AuthResponseDto;
 import kirris.blog.domain.posts.Posts;
 import kirris.blog.exception.BadRequestException;
 import kirris.blog.exception.NotFoundException;
+import kirris.blog.exception.UnauthorizedException;
 import kirris.blog.repository.AuthRepository;
 import kirris.blog.service.PostsService;
 import kirris.blog.domain.posts.PostsRequestDto;
@@ -38,7 +39,9 @@ public class PostsController { //try/catch가 필요한가...?
         if(result.hasErrors())
             throw new BadRequestException();
 
-        Auth userInfo = authRepository.findById(user.getId());
+        Auth userInfo = authRepository.findById(user.getId())
+                .orElseThrow(() -> new UnauthorizedException("user not found"));
+
         return ResponseEntity.ok().body(new PostsResponseDto(postsRepository.save(posts, userInfo)));
         //return postsRepository.save(posts);
         //500 Internal Server Error(try/catch)
@@ -82,7 +85,7 @@ public class PostsController { //try/catch가 필요한가...?
 
     //포스트 수정
     @Transactional
-    @PutMapping("/auth/{id}")
+    @PutMapping("/auth/own/{id}")
     public ResponseEntity<PostsResponseDto> update(@PathVariable("id") Long id, @RequestBody PostsRequestDto post) {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() ->
@@ -96,7 +99,7 @@ public class PostsController { //try/catch가 필요한가...?
 
     //포스트 삭제
     @Transactional
-    @DeleteMapping("/auth/{id}")
+    @DeleteMapping("/auth/own/{id}")
     public ResponseEntity remove(@PathVariable("id") Long id) {
         postsRepository.delete(id);
         return ResponseEntity.noContent().build(); //204

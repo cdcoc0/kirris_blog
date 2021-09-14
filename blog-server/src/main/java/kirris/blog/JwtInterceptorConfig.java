@@ -13,7 +13,7 @@ import java.util.List;
 public class JwtInterceptorConfig implements WebMvcConfigurer {
 
     private final CheckLoggedInInterceptor checkLoggedIn;
-//    private final CheckPostOwnerInterceptor checkPostOwner;
+    private final CheckPostOwnerInterceptor checkPostOwner;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -21,7 +21,7 @@ public class JwtInterceptorConfig implements WebMvcConfigurer {
 //        checkLoggedPath.add("/{id}");
 //        checkLoggedPath.add("/write");
 
-        registry.addInterceptor(checkLoggedIn).addPathPatterns("/auth");
-//        registry.addInterceptor(checkPostOwner).addPathPatterns("/{id}");
+        registry.addInterceptor(checkLoggedIn).addPathPatterns("/auth/**");
+        registry.addInterceptor(checkPostOwner).addPathPatterns("/auth/own/**");
     }
 }

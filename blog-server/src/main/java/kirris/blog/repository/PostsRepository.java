@@ -35,7 +35,7 @@ public class PostsRepository {
     }
 
     public Optional<Posts> findById(Long id) {
-        Posts post =  em.find(Posts.class, id);
+        Posts post = em.find(Posts.class, id);
         return Optional.ofNullable(post);
     }
 
