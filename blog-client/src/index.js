@@ -3,12 +3,36 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { applyMiddleware, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import rootReducer from './modules/index';
+import ReduxThunk from 'redux-thunk';
+import {tempSetUser, check} from './modules/user';
+
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(ReduxThunk)));
+
+function loadUser() {
+  try {
+    const user = localStorage.getItem('user');
+    if(!user) return;
+
+    store.dispatch(tempSetUser(user));
+    store.dispatch(check());
+  } catch(e) {
+    console.log('error in localStorage')
+  }
+}
+
+loadUser();
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
 
