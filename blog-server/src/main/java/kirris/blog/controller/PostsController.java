@@ -56,7 +56,7 @@ public class PostsController {
 
         if(countPosts.equals("0"))
             countPosts = "1";
-        
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("last-page", countPosts); //String으로 저장
 
