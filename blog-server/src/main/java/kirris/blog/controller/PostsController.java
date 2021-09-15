@@ -53,6 +53,10 @@ public class PostsController {
         //==http 커스텀 헤더 last-page 설정==//
         String countPosts = postsRepository.countAll() % 9 == 0 ?
                 String.valueOf(postsRepository.countAll() / 9) : String.valueOf(postsRepository.countAll() / 9 + 1);
+
+        if(countPosts.equals("0"))
+            countPosts = "1";
+        
         HttpHeaders headers = new HttpHeaders();
         headers.add("last-page", countPosts); //String으로 저장
 

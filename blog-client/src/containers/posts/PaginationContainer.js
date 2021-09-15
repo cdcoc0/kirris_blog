@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Pagination from '../../components/posts/Pagination';
 import qs from 'qs';
@@ -18,6 +18,7 @@ const PaginationContainer = ({location, match}) => {
         ignoreQueryPrefix: true
     });
 
+    
     return (
         <Pagination tag={tag} username={username} page={parseInt(page, 10)} lastPage={lastPage} />
     );
