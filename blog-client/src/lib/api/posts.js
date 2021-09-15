@@ -4,7 +4,7 @@ import qs from 'qs';
 export const writePost = ({title, body, tags}) => 
     client.post('/auth', {title, body, tags});
 
-// export const readPost = id => client.get(`/api/posts/{id}`);
+export const readPost = id => client.get(`/api/posts/${id}`);
 
 export const listPosts = ({tag, username, page}) => {
     const queryString = qs.stringify({
