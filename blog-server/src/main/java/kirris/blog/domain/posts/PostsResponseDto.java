@@ -23,9 +23,9 @@ public class PostsResponseDto {
 
     public void shortenTitleAndBody() {
         if(title.length() > 20)
-            title = title.substring(0, 20);
+            title = title.substring(0, 25) + " ...";
 
         if(body.length() > 100)
-            body = body.substring(0, 100);
+            body = body.substring(0, 110) + " ...";
     }
 }
