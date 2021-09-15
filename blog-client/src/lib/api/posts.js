@@ -16,10 +16,10 @@ export const listPosts = ({tag, username, page}) => {
 }
 
 export const updatePost = ({id, title, body, tags}) => 
-    client.patch(`/auth/own/${id}`, {
+    client.put(`/auth/own/${id}`, {
         title,
         body, 
         tags
     })
 
-// export const removePost = id => client.delete(`/auth/own/${id}`);
+export const removePost = id => client.delete(`/auth/own/${id}`);

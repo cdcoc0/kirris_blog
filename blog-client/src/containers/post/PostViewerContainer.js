@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-// import PostActionButtons from '../../components/post/PostActionButtons';
+import PostActionButtons from '../../components/post/PostActionButtons';
 import PostViewer from '../../components/post/PostViewer';
-// import { removePost } from '../../lib/api/posts';
+import { removePost } from '../../lib/api/posts';
 import { readPost, unloadPost } from '../../modules/post';
-// import { setOriginalPost } from '../../modules/write';
+import { setOriginalPost } from '../../modules/write';
 
 const PostViewerContainer = ({match, history}) => {
     const {postId} = match.params;
@@ -22,25 +22,25 @@ const PostViewerContainer = ({match, history}) => {
         return () => dispatch(unloadPost());
     }, [dispatch, postId]);
 
-    // const onEdit = () => {
-    //     dispatch(setOriginalPost(post));
-    //     history.push('/write');
-    // };
+    const onEdit = () => {
+        dispatch(setOriginalPost(post));
+        history.push('/write');
+    };
 
-    // const onRemove = async() => {
-    //     try {
-    //         await removePost(postId);
-    //         history.push('/');
-    //     } catch(e) {
-    //         console.log(e);
-    //     }
-    // }
+    const onRemove = async() => {
+        try {
+            await removePost(postId);
+            history.push('/');
+        } catch(e) {
+            console.log(e);
+        }
+    }
 
     const ownPost = (user && user.id) === (post && post.user.id);
 
     return (
-        <PostViewer post={post} loading={loading} error={error} />
-            // actionButtons={ownPost && <PostActionButtons onEdit={onEdit} onRemove={onRemove} />} />
+        <PostViewer post={post} loading={loading} error={error}
+            actionButtons={ownPost && <PostActionButtons onEdit={onEdit} onRemove={onRemove} />} />
     );
 };
 

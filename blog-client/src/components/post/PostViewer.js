@@ -57,7 +57,7 @@ const PostViewer = ({post, error, loading, actionButtons}) => {
                 <h1>{title}</h1>
                 <SubInfo username={user.username} publishedDate={publishedDate} hasMarginTop />
             </PostHead>
-            {/* {actionButtons} */}
+            {actionButtons}
             <PostContent
                 dangerouslySetInnerHTML={{__html: body}}
             />
