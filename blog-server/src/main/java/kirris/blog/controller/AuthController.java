@@ -24,7 +24,7 @@ public class AuthController {
     private final AuthService authService;
     private final JwtToken jwtToken;
 
-    @PostMapping("/register")
+    @PostMapping("/api/register")
     public ResponseEntity register(@Valid @RequestBody AuthRequestDto authRequest, BindingResult result) {
         //validate
         if(result.hasErrors())
@@ -48,7 +48,7 @@ public class AuthController {
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(authResponse);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public ResponseEntity login(@Valid @RequestBody AuthRequestDto authRequest, BindingResult result){
         //validate, 401 unauthorized
         if(result.hasErrors())
@@ -67,7 +67,7 @@ public class AuthController {
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(authResponse);
     }
 
-    @GetMapping("/check")
+    @GetMapping("/api/check")
     public ResponseEntity check(/*HttpServletRequest request*/@RequestAttribute(name = "user", required = false) AuthResponseDto user) {
         //header에서 유저 정보 가져오기
         if(user == null)
@@ -76,7 +76,7 @@ public class AuthController {
         return ResponseEntity.ok().body(user);
     }
 
-    @PostMapping("/out") //왜 logout 에러?
+    @PostMapping("/api/out") //왜 logout 에러?
     public ResponseEntity logout() {
         //쿠키에서 토큰 삭제
         ResponseCookie cookie = ResponseCookie.from("access_token", "").build();

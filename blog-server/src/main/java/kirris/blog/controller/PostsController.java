@@ -45,7 +45,7 @@ public class PostsController {
 
     //포스트 목록
     @Transactional(readOnly = true)
-    @GetMapping("/")
+    @GetMapping("/api/posts")
     public ResponseEntity<List<PostsResponseDto>> list(@RequestParam(defaultValue = "1") int page) {
         if(page < 1)
             throw new BadRequestException();
@@ -54,7 +54,7 @@ public class PostsController {
         String countPosts = postsRepository.countAll() % 9 == 0 ?
                 String.valueOf(postsRepository.countAll() / 9) : String.valueOf(postsRepository.countAll() / 9 + 1);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Last-Page", countPosts); //String으로 저장
+        headers.add("last-page", countPosts); //String으로 저장
 
         List<PostsResponseDto> responseBody = postsRepository.findAll(page).stream()
                                                 .map(PostsResponseDto::new)
@@ -69,7 +69,7 @@ public class PostsController {
 
     //포스트 읽기
     @Transactional(readOnly = true)
-    @GetMapping("/{id}")
+    @GetMapping("/api/posts/{id}")
     public ResponseEntity<PostsResponseDto> read(@PathVariable("id") Long id) {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() ->
