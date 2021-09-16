@@ -1,11 +1,10 @@
 import qs from "qs";
 import React from "react";
-import styled, {css} from "styled-components";
+import styled from "styled-components";
 import Button from "../common/Button";
 import palette from '../../lib/styles/palette';
 import {MdFirstPage, MdLastPage} from 'react-icons/md';
 import {RiArrowLeftSLine ,RiArrowRightSLine} from 'react-icons/ri';
-import {Link} from 'react-router-dom';
 
 const PaginationBlock = styled.div`
     width: 420px;
@@ -19,32 +18,22 @@ const PaginationBlock = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-    background: none;
+    background: ${palette.violet[3]};
     padding-top: 0.125rem;
     padding-left: 0.175rem;
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1px solid ${palette.violet[2]};
     margin: 0 0.5rem;
     svg {
-        color: ${palette.violet[3]};
         font-size: 1.5rem;
     }
     &:hover {
-        background: none;
-        border: 1px solid ${palette.violet[1]};
-        svg {
-            /* color: #130f40; */
-            color: ${palette.violet[2]};
-        }
+        background: ${palette.violet[2]};
     }
+    /* transition: 0.1s ease-in; */
 
     &:disabled {
-        border: ${palette.gray[5]};
-        svg {
-                color: ${palette.gray[5]};
-            }
         &:hover {
             background: ${palette.gray[3]};
         }
