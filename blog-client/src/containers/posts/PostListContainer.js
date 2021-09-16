@@ -7,12 +7,13 @@ import { listPosts } from '../../modules/posts';
 
 const PostListContainer = ({match, location}) => {
     const dispatch = useDispatch();
-    const {posts, error, loading, user} = useSelector(
+    const {posts, error, loading, user, countPosts} = useSelector(
         ({posts, loading, user}) => ({
             posts: posts.posts,
             error: posts.error,
             loading: loading['posts/LIST_POSTS'],
             user: user.user,
+            countPosts: posts.countPosts
         }),
     );
 
@@ -25,7 +26,7 @@ const PostListContainer = ({match, location}) => {
     }, [dispatch, location.search, match.params]);
 
     return (
-        <PostList loading={loading} error={error} posts={posts} showWriteButton={user} />
+        <PostList loading={loading} error={error} posts={posts} showWriteButton={user} countPosts={countPosts} />
     );
 };
 

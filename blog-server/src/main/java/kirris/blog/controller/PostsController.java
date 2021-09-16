@@ -53,14 +53,16 @@ public class PostsController {
             throw new BadRequestException();
 
         //==http 커스텀 헤더 last-page 설정==//
-        String countPosts = postsRepository.countAll() % 9 == 0 ?
-                String.valueOf(postsRepository.countAll() / 9) : String.valueOf(postsRepository.countAll() / 9 + 1);
+        long counts = postsRepository.countAll();
+        String countPosts = counts % 9 == 0 ?
+                String.valueOf(counts / 9) : String.valueOf(counts / 9 + 1);
 
         if(countPosts.equals("0"))
             countPosts = "1";
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("last-page", countPosts); //String으로 저장
+        headers.add("count-posts", String.valueOf(counts));
 
         List<PostsResponseDto> responseBody = postsRepository.findAll(page).stream()
                                                 .map(PostsResponseDto::new)

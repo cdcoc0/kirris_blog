@@ -89,7 +89,7 @@ const PostItem = ({post}) => {
     );
 }
 
-const PostList = ({loading, error, posts, showWriteButton}) => {
+const PostList = ({loading, error, posts, showWriteButton, countPosts}) => {
     if(error) {
         return <PostListBlock>Error</PostListBlock>
     }
@@ -101,16 +101,16 @@ const PostList = ({loading, error, posts, showWriteButton}) => {
                     <Button violet to="/write">새 글 작성하기</Button>
                 )} */}
                 <div>
-                    <span className="post-list">전체 포스트 </span><span className="post-count">{posts ? posts.length : 0}</span>
+                    <span className="post-list">전체 포스트 </span><span className="post-count">{countPosts}</span>
                 </div>
             </WritePostButtonWrapper>
             <PostListBlock>
-                {!loading && posts && posts.length === 0 && 
+                {!loading && countPosts === 0 && 
                     <div>
                         등록된 포스트가 없습니다.
                     </div>
                 }
-                {!loading && posts && posts.length !== 0 &&(
+                {!loading && countPosts !== 0 &&(
                     <>
                         {posts.map(post => (
                             <PostItem post={post} key={post.id} />
