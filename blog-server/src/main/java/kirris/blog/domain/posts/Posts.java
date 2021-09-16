@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.util.Date;
+
 import static javax.persistence.FetchType.LAZY;
 
 @Getter
@@ -27,6 +29,8 @@ public class Posts {
 
     private String tags; //이게 수정이 될 지...? HashMap / ArrayList
 
+    private Date published_date;
+
     //다대일 단방향
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
@@ -38,6 +42,7 @@ public class Posts {
         this.title = title;
         this.body = body;
         this.tags = tags;
+        this.published_date = new Date();
     }
 
     public void update(String title, String body, String tags) {

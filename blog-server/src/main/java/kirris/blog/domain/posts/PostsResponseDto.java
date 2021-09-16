@@ -8,12 +8,15 @@ import org.owasp.html.HtmlPolicyBuilder;
 import org.owasp.html.HtmlSanitizer;
 import org.owasp.html.PolicyFactory;
 
+import java.util.Date;
+
 @Getter
 public class PostsResponseDto {
     private Long id;
     private String title;
     private String body;
     private String tags;
+    private Date publishedDate;
     private AuthResponseDto user;
 
     public PostsResponseDto(Posts entity) {
@@ -22,6 +25,7 @@ public class PostsResponseDto {
         this.body = entity.getBody();
         this.tags = entity.getTags();
         this.user = entity.getAuth().deletePassword();
+        this.publishedDate = entity.getPublished_date();
     }
 
     public void removeHtmlAndShortenTitleAndBody() {
