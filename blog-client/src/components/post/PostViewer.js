@@ -19,10 +19,14 @@ const PostViewerBlock = styled(Responsive)`
             margin-top: 0.25rem;
         }
     }
+    .bottom-space {
+        border-top: 1px solid ${palette.gray[3]};
+        height: 72px;
+    }
 `;
 
 const PostHead = styled.div`
-    border-bottom: 1px solid ${palette.gray[2]};
+    border-bottom: 1px solid ${palette.gray[3]};
     padding-bottom: 3rem;
     margin-bottom: 3rem;
     h1 {
@@ -35,7 +39,7 @@ const PostHead = styled.div`
 const PostContent = styled.div`
     font-size: 1.3125rem;
     color: ${palette.gray[8]};
-    min-height: 320px;
+    min-height: 420px;
 `;
 
 const PostViewer = ({post, error, loading, actionButtons}) => {
@@ -63,6 +67,7 @@ const PostViewer = ({post, error, loading, actionButtons}) => {
             />
             
             {/* <Tags tags={tags} hasMarginBottom tagTitle /> */}
+            <div className="bottom-space" />
         </PostViewerBlock>
     );
 }

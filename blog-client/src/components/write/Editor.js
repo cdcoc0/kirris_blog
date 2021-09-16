@@ -28,7 +28,7 @@ const TitleInput = styled.input`
 const QuillWrapper = styled.div`
     .ql-editor {
         padding: 0;
-        min-height: 450px;
+        min-height: 420px;
         font-size: 1.125rem;
         line-height: 1.5;
     }

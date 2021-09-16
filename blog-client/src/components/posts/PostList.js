@@ -101,11 +101,11 @@ const PostList = ({loading, error, posts, showWriteButton}) => {
                     <Button violet to="/write">새 글 작성하기</Button>
                 )} */}
                 <div>
-                    <span className="post-list">전체 포스트 </span><span className="post-count">8</span>
+                    <span className="post-list">전체 포스트 </span><span className="post-count">{posts ? posts.length : 0}</span>
                 </div>
             </WritePostButtonWrapper>
             <PostListBlock>
-                {posts && posts.length === 0 && 
+                {!loading && posts && posts.length === 0 && 
                     <div>
                         등록된 포스트가 없습니다.
                     </div>
