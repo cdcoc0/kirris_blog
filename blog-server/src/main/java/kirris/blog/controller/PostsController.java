@@ -32,7 +32,7 @@ public class PostsController {
     //포스트 등록
     @Transactional
     @PostMapping("/auth")
-    public ResponseEntity<PostsResponseDto> write(@Valid @RequestBody PostsRequestDto posts, BindingResult result,
+    public ResponseEntity<PostsResponseDto> write(@Valid @RequestBody PostsRequestDto post, BindingResult result,
                                                   @RequestAttribute(name = "user", required = false) AuthResponseDto user) {
         if(result.hasErrors())
             throw new BadRequestException();
@@ -40,7 +40,9 @@ public class PostsController {
         Auth userInfo = authRepository.findById(user.getId())
                 .orElseThrow(() -> new UnauthorizedException("user not found"));
 
-        return ResponseEntity.ok().body(new PostsResponseDto(postsRepository.save(posts, userInfo)));
+        post.sanitizeHtml();
+
+        return ResponseEntity.ok().body(new PostsResponseDto(postsRepository.save(post, userInfo)));
     }
 
     //포스트 목록
@@ -66,7 +68,7 @@ public class PostsController {
                                                 .collect(Collectors.toList());
 
         //==제목, 내용 길이 제한==//
-        responseBody.forEach(post -> post.shortenTitleAndBody());
+        responseBody.forEach(post -> post.removeHtmlAndShortenTitleAndBody());
 
         return ResponseEntity.ok().headers(headers).body(responseBody);
     }

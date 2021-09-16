@@ -6,13 +6,16 @@ import kirris.blog.domain.posts.Posts;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.owasp.html.HtmlPolicyBuilder;
+import org.owasp.html.HtmlStreamEventReceiverWrapper;
+import org.owasp.html.PolicyFactory;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor
-public class PostsRequestDto {
+public class PostsRequestDto{
 
     @NotNull(message = "제목을 입력해주세요.")
     private String title;
@@ -35,5 +38,18 @@ public class PostsRequestDto {
                 .body(body)
                 .tags(tags)
                 .build();
+    }
+
+    public void sanitizeHtml() {
+        PolicyFactory policy = new HtmlPolicyBuilder()
+                .allowElements("h1", "h2", "b", "i", "u", "s", "p", "ul", "ol", "li", "blockquote", "a", "img")
+                .allowUrlProtocols("data", "http")
+                .allowAttributes("href", "name", "target").onElements("a")
+                .allowAttributes("src").onElements("img")
+                .allowAttributes("class").onElements("li")
+                .toFactory();
+
+        String sanitized = policy.sanitize(body);
+        body = sanitized;
     }
 }

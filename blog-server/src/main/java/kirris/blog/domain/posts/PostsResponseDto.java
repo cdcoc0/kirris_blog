@@ -4,6 +4,9 @@ import kirris.blog.domain.auth.Auth;
 import kirris.blog.domain.auth.AuthResponseDto;
 import kirris.blog.domain.posts.Posts;
 import lombok.Getter;
+import org.owasp.html.HtmlPolicyBuilder;
+import org.owasp.html.HtmlSanitizer;
+import org.owasp.html.PolicyFactory;
 
 @Getter
 public class PostsResponseDto {
@@ -21,7 +24,13 @@ public class PostsResponseDto {
         this.user = entity.getAuth().deletePassword();
     }
 
-    public void shortenTitleAndBody() {
+    public void removeHtmlAndShortenTitleAndBody() {
+        PolicyFactory policy = new HtmlPolicyBuilder()
+                .allowElements()
+                .toFactory();
+
+        body = policy.sanitize(body);
+
         if(title.length() > 20)
             title = title.substring(0, 25) + " ...";
 
