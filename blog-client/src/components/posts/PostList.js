@@ -34,7 +34,7 @@ const PostItemBlock = styled.div`
     padding: 1rem;
     overflow-y: hidden;
     .postItem-pic{
-        background: gray;
+        background:linear-gradient( to right, #42275a, #734b6d );
         height: 200px;
         margin-bottom: 1rem;
         border-radius: 4px;

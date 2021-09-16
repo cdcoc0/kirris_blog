@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Quill from "quill";
 import 'quill/dist/quill.bubble.css';
 import styled from "styled-components";

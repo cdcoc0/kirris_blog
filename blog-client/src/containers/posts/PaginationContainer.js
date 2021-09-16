@@ -18,7 +18,6 @@ const PaginationContainer = ({location, match}) => {
         ignoreQueryPrefix: true
     });
 
-    
     return (
         <Pagination tag={tag} username={username} page={parseInt(page, 10)} lastPage={lastPage} />
     );

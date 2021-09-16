@@ -7,7 +7,7 @@ const [LIST_POSTS, LIST_POSTS_SUCCESS, LIST_POSTS_FAILURE] = createRequestAction
 export const listPosts = createRequestThunk(LIST_POSTS, postsAPI.listPosts);
 
 const initialState = {
-    posts: [],
+    posts: null,
     error: null,
     lastPage: 1,
     countPosts: 0
