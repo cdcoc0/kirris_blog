@@ -45,10 +45,10 @@ public class Posts {
         this.published_date = new Date();
     }
 
-    public void update(String title, String body, String tags) {
+    public void update(String title, String body/*, String tags*/) {
         this.title = title;
         this.body = body;
-        this.tags = tags;
+//        this.tags = tags;
     }
 
     public void addAuth(Auth auth) {

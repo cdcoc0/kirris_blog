@@ -5,7 +5,7 @@ import palette from "../../lib/styles/palette";
 import Button from "../common/Button";
 import Responsive from "../common/Responsive";
 import SubInfo from "../common/SubInfo";
-// import Tags from "../common/Tags";
+import Tags from "../common/Tags";
 
 const PostListBlock = styled(Responsive)`
     /* margin-top: 5rem;
@@ -66,7 +66,7 @@ const PostItemBlock = styled.div`
     }
     
     .postItem-space {
-        height: 0.75rem;
+        height: 1rem;
     }
 `;
 
@@ -84,7 +84,7 @@ const PostItem = ({post}) => {
             <p>{body}</p>
             <SubInfo username={user.username} publishedDate={new Date(publishedDate)} postItemFont />
             <div className="postItem-space" />
-            {/* <Tags tags={tags} changeFontSize /> */}
+            <Tags tags={tags} changeFontSize />
         </PostItemBlock>
     );
 }

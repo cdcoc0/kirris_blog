@@ -23,10 +23,11 @@ public class PostsRequestDto{
     @NotEmpty(message = "내용을 입력해주세요.")
     private String body;
 
-    private String tags;
+    private String[] tags;
+    private String handledTags;
 
     @Builder
-    public PostsRequestDto(String title, String body, String tags) {
+    public PostsRequestDto(String title, String body, String[] tags) {
         this.title = title;
         this.body = body;
         this.tags = tags;
@@ -36,7 +37,7 @@ public class PostsRequestDto{
         return Posts.builder()
                 .title(title)
                 .body(body)
-                .tags(tags)
+                .tags(handledTags)
                 .build();
     }
 
@@ -51,5 +52,13 @@ public class PostsRequestDto{
 
         String sanitized = policy.sanitize(body);
         body = sanitized;
+    }
+
+    public void handleTags() {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < tags.length; i++) {
+            sb.append(tags[i] + ",");
+        }
+        handledTags = sb.toString();
     }
 }

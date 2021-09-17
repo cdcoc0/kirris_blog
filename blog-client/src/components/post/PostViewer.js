@@ -3,7 +3,7 @@ import styled from "styled-components";
 import palette from "../../lib/styles/palette";
 import Responsive from "../common/Responsive";
 import SubInfo from "../common/SubInfo";
-// import Tags from "../common/Tags";
+import Tags from "../common/Tags";
 
 const PostViewerBlock = styled(Responsive)`
     margin-top: 5rem;
@@ -19,10 +19,9 @@ const PostViewerBlock = styled(Responsive)`
             margin-top: 0.25rem;
         }
     }
-    .bottom-space {
+    /* .bottom-border {
         border-top: 1px solid ${palette.gray[3]};
-        height: 72px;
-    }
+    } */
 `;
 
 const PostHead = styled.div`
@@ -66,8 +65,8 @@ const PostViewer = ({post, error, loading, actionButtons}) => {
                 dangerouslySetInnerHTML={{__html: body}}
             />
             
-            {/* <Tags tags={tags} hasMarginBottom tagTitle /> */}
-            <div className="bottom-space" />
+            {/* <div className="bottom-border" /> */}
+            <Tags tags={tags} hasMarginBottom tagTitle />
         </PostViewerBlock>
     );
 }

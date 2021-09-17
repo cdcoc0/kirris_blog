@@ -41,6 +41,7 @@ public class PostsController {
                 .orElseThrow(() -> new UnauthorizedException("user not found"));
 
         post.sanitizeHtml();
+        post.handleTags();
 
         return ResponseEntity.ok().body(new PostsResponseDto(postsRepository.save(post, userInfo)));
     }
@@ -66,11 +67,13 @@ public class PostsController {
 
         List<PostsResponseDto> responseBody = postsRepository.findAll(page).stream()
                                                 .map(PostsResponseDto::new)
-
                                                 .collect(Collectors.toList());
 
         //==제목, 내용 길이 제한==//
-        responseBody.forEach(post -> post.removeHtmlAndShortenTitleAndBody());
+        responseBody.forEach(post -> {
+            post.removeHtmlAndShortenTitleAndBody();
+            post.tagsToArray();
+        });
 
         return ResponseEntity.ok().headers(headers).body(responseBody);
     }
@@ -83,7 +86,9 @@ public class PostsController {
                 .orElseThrow(() ->
                         new NotFoundException(id));
 
-        return ResponseEntity.ok().body(new PostsResponseDto(entity));
+        PostsResponseDto post = new PostsResponseDto(entity);
+        post.tagsToArray();
+        return ResponseEntity.ok().body(post);
     }
 
     //포스트 수정
@@ -94,7 +99,7 @@ public class PostsController {
                 .orElseThrow(() ->
                         new NotFoundException(id));
 
-        entity.update(post.getTitle(), post.getBody(), post.getTags());
+        entity.update(post.getTitle(), post.getBody()/*, post.getTags()*/);
         return ResponseEntity.ok().body(new PostsResponseDto(entity));
         //merge 지양
     }
