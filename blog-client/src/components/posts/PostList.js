@@ -34,7 +34,7 @@ const PostItemBlock = styled.div`
     padding: 1rem;
     overflow-y: hidden;
     .postItem-pic{
-        background:linear-gradient( to right, #42275a, #734b6d );
+        /* background:linear-gradient( to right, #42275a, #734b6d ); */
         height: 200px;
         margin-bottom: 1rem;
         border-radius: 4px;
@@ -44,6 +44,10 @@ const PostItemBlock = styled.div`
             border-radius: 4px;
         }
     }
+    .empty-thumbnail {
+        background: ${palette.gray[1]};
+    }
+    
     .postItem-category {
         margin-bottom: 1rem;
         font-weight: bold;
@@ -80,9 +84,10 @@ const PostItem = ({post}) => {
     return (
         <PostItemBlock>
             <Link to={`/@${user.username}/${id}`}>
-                <div className="postItem-pic" dangerouslySetInnerHTML={{__html: thumbnail}}>
-                    {/* {thumbnail && <img src={`${thumbnail}`} />} */}
-                </div>
+                {thumbnail ? 
+                    <div className="postItem-pic" dangerouslySetInnerHTML={{__html: thumbnail}} /> :
+                    <div className="postItem-pic empty-thumbnail" />
+                }
             </Link>
             <div className="postItem-category">카테고리</div>
             <h3>
