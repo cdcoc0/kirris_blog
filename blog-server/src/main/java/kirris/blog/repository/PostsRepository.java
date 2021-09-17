@@ -34,6 +34,14 @@ public class PostsRepository {
                 .getResultList();
     }
 
+    public List<Posts> findAllByTag(int page, String tag) {
+        return em.createQuery("SELECT p from Posts p WHERE p.tags LIKE CONCAT('%', :tag, '%') ORDER BY p.id desc", Posts.class)
+                .setParameter("tag", tag)
+                .setFirstResult((page - 1) * 9)
+                .setMaxResults(9)
+                .getResultList();
+    }
+
     public Optional<Posts> findById(Long id) {
         Posts post = em.find(Posts.class, id);
         return Optional.ofNullable(post);

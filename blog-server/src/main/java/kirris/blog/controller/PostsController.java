@@ -50,7 +50,8 @@ public class PostsController {
     //포스트 목록
     @Transactional(readOnly = true)
     @GetMapping("/api/posts")
-    public ResponseEntity<List<PostsResponseDto>> list(@RequestParam(defaultValue = "1") int page) {
+    public ResponseEntity<List<PostsResponseDto>> list(@RequestParam(defaultValue = "1") int page,
+                                                       @RequestParam(required = false) String tag) {
         if(page < 1)
             throw new BadRequestException();
 
@@ -69,9 +70,8 @@ public class PostsController {
         headers.add("count-posts", String.valueOf(counts)); //전체 게시글 수
 
         //==데이터 가져오기
-        List<PostsResponseDto> responseBody = postsRepository.findAll(page).stream()
-                                                .map(PostsResponseDto::new)
-                                                .collect(Collectors.toList());
+        List<Posts> results = tag == null ? postsRepository.findAll(page): postsRepository.findAllByTag(page, tag);
+        List<PostsResponseDto> responseBody = results.stream().map(PostsResponseDto::new).collect(Collectors.toList());
 
         //==html태그 제거 및 내용, 길이 제한한
        //==태그 다시 배열로 만들기

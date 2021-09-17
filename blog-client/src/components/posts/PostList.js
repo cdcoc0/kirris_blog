@@ -36,7 +36,7 @@ const PostItemBlock = styled.div`
     .postItem-pic{
         /* background:linear-gradient( to right, #42275a, #734b6d ); */
         height: 200px;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
         border-radius: 4px;
         img {
             height: 100%;
@@ -47,7 +47,7 @@ const PostItemBlock = styled.div`
     .empty-thumbnail {
         background: ${palette.gray[1]};
     }
-    
+
     .postItem-category {
         margin-bottom: 1rem;
         font-weight: bold;
