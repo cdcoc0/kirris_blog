@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import AuthForm from '../../components/auth/AuthForm';
-import { changeField, initializeForm, register } from '../../modules/auth';
+import { changeField, initializeForm, register, initializeError } from '../../modules/auth';
 import { check } from '../../modules/user';
 
 const RegisterForm = ({history}) => {
@@ -60,6 +60,8 @@ const RegisterForm = ({history}) => {
             console.log(auth);
             dispatch(check());
         }
+        
+        return () => dispatch(initializeError());
     }, [auth, authError, dispatch]);
 
     useEffect(() => {

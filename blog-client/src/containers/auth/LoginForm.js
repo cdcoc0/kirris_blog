@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeField, initializeForm, login } from '../../modules/auth';
+import { changeField, initializeForm, login, initializeError } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
 import { withRouter } from 'react-router-dom';
 import { check } from '../../modules/user';
@@ -49,6 +49,8 @@ const LoginForm = ({history}) => {
             console.log(auth);
             dispatch(check());
         }
+        
+        return () => dispatch(initializeError());
     }, [auth, authError, dispatch]);
 
     useEffect(() => {

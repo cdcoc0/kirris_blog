@@ -5,6 +5,7 @@ import * as authApi from '../lib/api/auth';
 
 const CHANGE_FIELD = 'auth/CHANGE_FIELD';
 const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
+const INITIALIZE_ERROR = 'auth/INITIALIZE_ERROR';
 
 const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes(
     'auth/REGISTER'
@@ -19,6 +20,7 @@ export const changeField = createAction(CHANGE_FIELD, ({form, key, value}) => ({
     value //실제 바꾸려는 값
 }));
 export const initializeForm = createAction(INITIALIZE_FORM, form => form); //register || login
+export const initializeError = createAction(INITIALIZE_ERROR);
 
 export const register = createRequestThunk(REGISTER, authApi.register);
 export const login = createRequestThunk(LOGIN, authApi.login);
@@ -47,6 +49,10 @@ const auth = handleActions(
         [INITIALIZE_FORM]: (state, {payload: form}) => ({
             ...state,
             [form]: initialState[form],
+        }),
+        [INITIALIZE_ERROR]: state => ({
+            ...state,
+            authError: null
         }),
         [REGISTER_SUCCESS]: (state, {payload: auth}) => ({
             ...state,
