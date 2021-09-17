@@ -27,9 +27,14 @@ public class Posts {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String body;
 
+    @Column(length = 500)
     private String tags; //이게 수정이 될 지...? HashMap / ArrayList
 
+    @Column(nullable = false)
     private Date published_date;
+
+    @Column(columnDefinition = "TEXT")
+    private String thumbnail;
 
     //다대일 단방향
     @ManyToOne(fetch = LAZY)
@@ -37,18 +42,19 @@ public class Posts {
     private Auth auth;
 
     @Builder
-    public Posts(Long id, String title, String body, String tags) {
+    public Posts(Long id, String title, String body, String tags, String thumbnail) {
         this.id = id;
         this.title = title;
         this.body = body;
         this.tags = tags;
         this.published_date = new Date();
+        this.thumbnail = thumbnail;
     }
 
-    public void update(String title, String body/*, String tags*/) {
+    public void update(String title, String body, String handledTags) {
         this.title = title;
         this.body = body;
-//        this.tags = tags;
+        this.tags = handledTags;
     }
 
     public void addAuth(Auth auth) {

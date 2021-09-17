@@ -38,6 +38,11 @@ const PostItemBlock = styled.div`
         height: 200px;
         margin-bottom: 1rem;
         border-radius: 4px;
+        img {
+            height: 100%;
+            width: 100%;
+            border-radius: 4px;
+        }
     }
     .postItem-category {
         margin-bottom: 1rem;
@@ -71,11 +76,14 @@ const PostItemBlock = styled.div`
 `;
 
 const PostItem = ({post}) => {
-    const {title, body, publishedDate, tags, user, id} = post;
+    const {title, body, publishedDate, tags, user, id, thumbnail} = post;
     return (
         <PostItemBlock>
             <Link to={`/@${user.username}/${id}`}>
-                <div className="postItem-pic"></div>
+                <div className="postItem-pic">
+                    {thumbnail && <img src={`${thumbnail}`} />}
+                    {/* <img src="https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile7.uf.tistory.com%2Fimage%2F24283C3858F778CA2EFABE" /> */}
+                </div>
             </Link>
             <div className="postItem-category">카테고리</div>
             <h3>

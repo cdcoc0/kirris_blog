@@ -42,6 +42,7 @@ public class PostsController {
 
         post.sanitizeHtml();
         post.handleTags();
+        post.getThumbnail();
 
         return ResponseEntity.ok().body(new PostsResponseDto(postsRepository.save(post, userInfo)));
     }
@@ -61,15 +62,19 @@ public class PostsController {
         if(countPosts.equals("0"))
             countPosts = "1";
 
+        //==last page를 초과하는 페이지 요청시 게시글이 존재하지 않습니다 메시지 전송
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("last-page", countPosts); //String으로 저장
-        headers.add("count-posts", String.valueOf(counts));
+        headers.add("count-posts", String.valueOf(counts)); //전체 게시글 수
 
+        //==데이터 가져오기
         List<PostsResponseDto> responseBody = postsRepository.findAll(page).stream()
                                                 .map(PostsResponseDto::new)
                                                 .collect(Collectors.toList());
 
-        //==제목, 내용 길이 제한==//
+        //==html태그 제거 및 내용, 길이 제한한
+       //==태그 다시 배열로 만들기
         responseBody.forEach(post -> {
             post.removeHtmlAndShortenTitleAndBody();
             post.tagsToArray();
@@ -99,7 +104,8 @@ public class PostsController {
                 .orElseThrow(() ->
                         new NotFoundException(id));
 
-        entity.update(post.getTitle(), post.getBody()/*, post.getTags()*/);
+        post.handleTags();
+        entity.update(post.getTitle(), post.getBody(), post.getHandledTags());
         return ResponseEntity.ok().body(new PostsResponseDto(entity));
         //merge 지양
     }

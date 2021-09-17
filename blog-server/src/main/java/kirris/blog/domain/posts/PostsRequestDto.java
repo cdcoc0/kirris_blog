@@ -26,6 +26,8 @@ public class PostsRequestDto{
     private String[] tags;
     private String handledTags;
 
+    private String thumbnail;
+
     @Builder
     public PostsRequestDto(String title, String body, String[] tags) {
         this.title = title;
@@ -38,6 +40,7 @@ public class PostsRequestDto{
                 .title(title)
                 .body(body)
                 .tags(handledTags)
+                .thumbnail(thumbnail)
                 .build();
     }
 
@@ -52,6 +55,17 @@ public class PostsRequestDto{
 
         String sanitized = policy.sanitize(body);
         body = sanitized;
+    }
+
+    public void getThumbnail() {
+        int idx = body.indexOf("<img");
+        if(idx >= 0) {
+            String sub = body.substring(idx);
+            sub = sub.substring(sub.indexOf("\""), sub.indexOf("/>"));
+            sub = sub.substring(0, sub.lastIndexOf("\"") + 1);
+//            sub = sub.replace(";", "-");
+            thumbnail = sub;
+        }
     }
 
     public void handleTags() {

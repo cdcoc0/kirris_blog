@@ -19,6 +19,7 @@ public class PostsResponseDto {
     private String handledTags;
     private String[] tags;
     private Date publishedDate;
+    private String thumbnail;
     private AuthResponseDto user;
 
     public PostsResponseDto(Posts entity) {
@@ -28,6 +29,7 @@ public class PostsResponseDto {
         this.handledTags = entity.getTags();
         this.user = entity.getAuth().deletePassword();
         this.publishedDate = entity.getPublished_date();
+        this.thumbnail = entity.getThumbnail();
     }
 
     public void removeHtmlAndShortenTitleAndBody() {
