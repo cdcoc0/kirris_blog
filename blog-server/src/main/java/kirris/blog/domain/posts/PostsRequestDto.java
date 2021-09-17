@@ -61,9 +61,9 @@ public class PostsRequestDto{
         int idx = body.indexOf("<img");
         if(idx >= 0) {
             String sub = body.substring(idx);
-            sub = sub.substring(sub.indexOf("\""), sub.indexOf("/>"));
-            sub = sub.substring(0, sub.lastIndexOf("\"") + 1);
-//            sub = sub.replace(";", "-");
+            sub = sub.substring(0, sub.indexOf(">") + 1);
+//            sub = sub.substring(sub.indexOf("\""), sub.indexOf("/>"));
+//            sub = sub.substring(0, sub.lastIndexOf("\"") + 1);
             thumbnail = sub;
         }
     }

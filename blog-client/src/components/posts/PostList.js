@@ -80,9 +80,8 @@ const PostItem = ({post}) => {
     return (
         <PostItemBlock>
             <Link to={`/@${user.username}/${id}`}>
-                <div className="postItem-pic">
-                    {thumbnail && <img src={`${thumbnail}`} />}
-                    {/* <img src="https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile7.uf.tistory.com%2Fimage%2F24283C3858F778CA2EFABE" /> */}
+                <div className="postItem-pic" dangerouslySetInnerHTML={{__html: thumbnail}}>
+                    {/* {thumbnail && <img src={`${thumbnail}`} />} */}
                 </div>
             </Link>
             <div className="postItem-category">카테고리</div>
