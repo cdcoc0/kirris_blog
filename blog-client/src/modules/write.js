@@ -18,7 +18,7 @@ export const updatePost = createRequestThunk(UPDATE_POST, postsAPI.updatePost);
 const initialState = {
     title: '',
     body: '',
-    tags: '',
+    tags: [],
     post: null,
     postError: null,
     originalPostId: null,

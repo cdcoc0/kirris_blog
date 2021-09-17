@@ -11,7 +11,6 @@ const WriteActionButtonsBlock = styled.div`
     button + button {
         margin-left: 0.5rem;
     }
-    border-top: 1px solid ${palette.gray[3]};
 `;
 
 const StyledButton = styled(Button)`
