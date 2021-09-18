@@ -36,7 +36,6 @@ const TagsBlock = styled.div`
         &:hover {
             color: #130f40;
             background: #fff9da;
-            //아니면 그냥 회색바탕
         }
         ${props => 
             props.changeFontSize &&

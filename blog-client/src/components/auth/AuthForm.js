@@ -25,11 +25,8 @@ const AuthFormBlock = styled.div`
 const StyledInput = styled.input`
     font-size: 1rem;
     border: none;
-    //background: ${palette.gray[1]};
     background: none;
-    //border-radius: 4px;
     border-bottom: 1px solid ${palette.violet[3]};
-    //border: 1px solid ${palette.violet[0]};
     padding: 0.5rem;
     outline: none;
     width: 100%;

@@ -10,7 +10,6 @@ const PostViewerBlock = styled(Responsive)`
     padding-left: 0;
     .tag-title {
         color: ${palette.violet[3]};
-        //margin-bottom: 1rem;
         font-size: 1.125rem;
         display: flex;
         align-items: center;
@@ -39,6 +38,9 @@ const PostContent = styled.div`
     font-size: 1.3125rem;
     color: ${palette.gray[8]};
     min-height: 400px;
+    img {
+        max-width: 100%;
+    }
 `;
 
 const PostViewer = ({post, error, loading, actionButtons}) => {

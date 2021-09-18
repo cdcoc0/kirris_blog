@@ -32,7 +32,6 @@ const buttonStyle = css`
             &:hover {
                 background: ${palette.yellow[2]};
                 color: #130f40;
-                //background: #141433;
             }
             transition: 0.1s ease-in;
         `
@@ -51,13 +50,6 @@ const buttonStyle = css`
             transition: 0.1s ease-in;
         `
     }
-    /* ${props => 
-        props.radius &&
-        css`
-            background: none;
-            border-radius: 16px;
-        `
-    } */
     &:disabled {
         background: ${palette.gray[3]};
         color: ${palette.gray[5]};

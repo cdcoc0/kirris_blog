@@ -23,20 +23,25 @@ public class AuthService {
 
     @Transactional
     public AuthResponseDto register(AuthRequestDto authRequest) {
+
+        //==check username whether exists
         checkExist(authRequest);
+
+        //==encrypt password
         setPassword(authRequest);
+
         return authRepository.save(authRequest);
     }
 
     @Transactional
     public AuthResponseDto login(AuthRequestDto authRequest) {
-        //find by username
-        //if not exists, 401
+
+        //==find by username
         List<Auth> getUser = authRepository.findByUsername(authRequest.getUsername());
         if(getUser.isEmpty())
             throw new UnauthorizedException("user not found");
 
-        //confirm password, 401
+        //==confirm password
         Auth user = getUser.get(0);
         matchPassword(authRequest.getPassword(), user.getPassword());
 

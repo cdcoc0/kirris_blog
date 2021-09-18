@@ -51,17 +51,18 @@ public class JwtToken {
 
     //JWT 토큰에서 회원 정보 추출
     public AuthResponseDto getUserInfo(String token) {
-//        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
         String username = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
         List<Auth> user = authRepository.findByUsername(username);
+
         if(user.isEmpty())
-//            throw new UnauthorizedException("user not exists: username = " + username);
             return null;
+
         return user.get(0).deletePassword();
     }
 
     //Request의 Header에서 token 가져오기
     public String resolveToken(HttpServletRequest request) {
+
         if(request.getCookies() != null) {
             Cookie[] cookies = request.getCookies();
 
@@ -74,8 +75,6 @@ public class JwtToken {
         }
 
         return "";
-
-//        return request.getHeader("X-AUTH-TOKEN");
     }
 
     //토큰 유효성 + 만료일자 확인

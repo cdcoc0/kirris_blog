@@ -31,7 +31,6 @@ const StyledButton = styled(Button)`
     &:hover {
         background: ${palette.violet[2]};
     }
-    /* transition: 0.1s ease-in; */
 
     &:disabled {
         &:hover {

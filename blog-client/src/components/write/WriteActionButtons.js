@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import palette from "../../lib/styles/palette";
 import Button from "../common/Button";
 
 const WriteActionButtonsBlock = styled.div`
     margin-top: 1rem;
-    //margin-bottom: 3rem;
     padding-top: 2rem;
     padding-bottom: 3rem;
     button + button {

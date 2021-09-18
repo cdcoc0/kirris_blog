@@ -1,11 +1,8 @@
 package kirris.blog.domain.posts;
 
-import kirris.blog.domain.auth.Auth;
 import kirris.blog.domain.auth.AuthResponseDto;
-import kirris.blog.domain.posts.Posts;
 import lombok.Getter;
 import org.owasp.html.HtmlPolicyBuilder;
-import org.owasp.html.HtmlSanitizer;
 import org.owasp.html.PolicyFactory;
 
 import java.util.Date;
@@ -32,6 +29,7 @@ public class PostsResponseDto {
         this.thumbnail = entity.getThumbnail();
     }
 
+    //==body에서 html태그 삭제, 길이 제한
     public void removeHtmlAndShortenTitleAndBody() {
         PolicyFactory policy = new HtmlPolicyBuilder()
                 .allowElements()
@@ -46,6 +44,7 @@ public class PostsResponseDto {
             body = body.substring(0, 110) + " ...";
     }
 
+    //==태그 배열로 정렬
     public void tagsToArray() {
         StringTokenizer st = new StringTokenizer(handledTags, ",");
         tags = new String[st.countTokens()];

@@ -10,11 +10,8 @@ const AuthTemplateBlock = styled.div`
     top: 0;
     bottom: 0;
     right: 0;
-    /* background: ${palette.gray[0]}; */
-    //background: #141433;
     /* 내부 중앙 정렬 */
     display: flex;
-    //flex-direction: column;
     justify-content: center;
     align-items: center;
 `;
@@ -34,7 +31,6 @@ const WhiteBox = styled.div`
     width: 360px;
     border-radius: 4px;
     border: 1px solid ${palette.violet[3]};
-    //background: ${palette.gray[3]};
 `
 
 const HomeButton = styled(Link)`

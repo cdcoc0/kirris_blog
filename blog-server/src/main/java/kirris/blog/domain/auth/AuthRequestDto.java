@@ -1,6 +1,5 @@
 package kirris.blog.domain.auth;
 
-import kirris.blog.domain.posts.Posts;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,14 +16,10 @@ public class AuthRequestDto {
     @NotNull(message = "비밀번호를 입력하세요.")
     private String password;
 
-    //@NotNull(message = "비밀번호를 확인해주세요.")
-//    private String confirmPassword; //클라이언트에서 처리
-
     @Builder
     public AuthRequestDto(String username, String password) {
         this.username = username;
         this.password = password;
-//        this.confirmPassword = confirmPassword;
     }
 
     public Auth toEntity() {
@@ -34,6 +29,7 @@ public class AuthRequestDto {
                 .build();
     }
 
+    //==encrypt password
     public void setPassword(String password) {
         this.password = password;
     }

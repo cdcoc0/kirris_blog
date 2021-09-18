@@ -1,22 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import palette from "../../lib/styles/palette";
-import Button from "../common/Button";
 import Responsive from "../common/Responsive";
 import SubInfo from "../common/SubInfo";
 import Tags from "../common/Tags";
 
 const PostListBlock = styled(Responsive)`
-    /* margin-top: 5rem;
-    padding-left: 3rem; */
     display: flex;
     flex-wrap: wrap;
 `;
 
 const WritePostButtonWrapper = styled(Responsive)`
-    /* display: flex;
-    justify-content: flex-end; */
     margin-top: 8rem;
     margin-bottom: 5rem;
     font-weight: bold;
@@ -25,7 +20,6 @@ const WritePostButtonWrapper = styled(Responsive)`
         color: ${palette.violet[4]};
         font-size: 1.125rem;
     }
-    //border-bottom: 1px solid ${palette.gray[3]};
 `;
 
 const PostItemBlock = styled.div`
@@ -34,7 +28,6 @@ const PostItemBlock = styled.div`
     padding: 1rem;
     overflow-y: hidden;
     .postItem-pic{
-        /* background:linear-gradient( to right, #42275a, #734b6d ); */
         height: 200px;
         margin-bottom: 1.5rem;
         border-radius: 4px;
@@ -54,14 +47,7 @@ const PostItemBlock = styled.div`
         color: ${palette.violet[3]};
         font-size: 0.875rem;
     }
-    /* padding-top: 1rem;
-    padding-bottom: 2rem; */
-    /* &:first-child {
-        margin-right: 0.25rem;
-    }
-    & + & {
-        margin-right: 0.25rem;
-    } */
+
     h3 {
         font-size: 1.5rem;
         margin-top: 0;
@@ -70,6 +56,7 @@ const PostItemBlock = styled.div`
             color: ${palette.gray[7]};
         }
     }
+
     p {
         color: ${palette.gray[6]};
     }
@@ -109,9 +96,6 @@ const PostList = ({loading, error, posts, showWriteButton, countPosts}) => {
     return (
         <>
             <WritePostButtonWrapper>
-                {/* {showWriteButton && (
-                    <Button violet to="/write">새 글 작성하기</Button>
-                )} */}
                 <div>
                     <span className="post-list">전체 포스트 </span><span className="post-count">{countPosts}</span>
                 </div>

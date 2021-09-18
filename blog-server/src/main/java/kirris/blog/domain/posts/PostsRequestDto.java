@@ -1,13 +1,9 @@
 package kirris.blog.domain.posts;
 
-import kirris.blog.domain.auth.Auth;
-import kirris.blog.domain.auth.AuthResponseDto;
-import kirris.blog.domain.posts.Posts;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.owasp.html.HtmlPolicyBuilder;
-import org.owasp.html.HtmlStreamEventReceiverWrapper;
 import org.owasp.html.PolicyFactory;
 
 import javax.validation.constraints.NotEmpty;
@@ -44,6 +40,7 @@ public class PostsRequestDto{
                 .build();
     }
 
+    //==XSS 방지 위해 지정된 태그 이외의 html 태그 제거
     public void sanitizeHtml() {
         PolicyFactory policy = new HtmlPolicyBuilder()
                 .allowElements("h1", "h2", "b", "i", "u", "s", "p", "ul", "ol", "li", "blockquote", "a", "img")
@@ -57,17 +54,17 @@ public class PostsRequestDto{
         body = sanitized;
     }
 
+    //==body에서 첫 번째 img태그 추출해 썸네일로 저장
     public void getThumbnail() {
         int idx = body.indexOf("<img");
         if(idx >= 0) {
             String sub = body.substring(idx);
             sub = sub.substring(0, sub.indexOf(">") + 1);
-//            sub = sub.substring(sub.indexOf("\""), sub.indexOf("/>"));
-//            sub = sub.substring(0, sub.lastIndexOf("\"") + 1);
             thumbnail = sub;
         }
     }
 
+    //==배열로 받은 태그 문자열로 변경
     public void handleTags() {
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < tags.length; i++) {

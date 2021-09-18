@@ -28,7 +28,7 @@ public class Posts {
     private String body;
 
     @Column(length = 500)
-    private String tags; //이게 수정이 될 지...? HashMap / ArrayList
+    private String tags;
 
     @Column(nullable = false)
     private Date published_date;

@@ -11,7 +11,6 @@ const HeaderBlock = styled.div`
     position: fixed;
     width: 100%;
     background: rgba(255, 255, 255, 0.9);
-    //background: #f0e1fff1;
     box-shadow: 0px 1px 3px ${palette.gray[2]};
     z-index: 5;
 `;
@@ -22,13 +21,10 @@ const Wrapper = styled(Responsive)`
     align-items: center;
     justify-content: space-between; //서로간의 여백 최대
     color: ${palette.violet[3]};
-    //margin-top: 1rem;
-    //margin-bottom: 0.75rem;
     .logo {
         font-size: 2rem;
         font-weight: 800;
         letter-spacing: 2px;
-        //color: #fbf7ff;
     }
     .right {
         color: ${palette.gray[6]};

@@ -18,7 +18,7 @@ const TagForm = styled.form`
     overflow: hidden;
     display: flex;
     width: 256px;
-    border: 1px solid ${palette.gray[6]}; //초기화
+    border: 1px solid ${palette.gray[6]};
     
     input,
     button {
@@ -41,8 +41,6 @@ const TagForm = styled.form`
         font-weight: bold;
         &:hover {
             background: ${palette.violet[4]};
-            /* background: ${palette.yellow[2]};
-            color: #130f40; */
         }
     }
 `;
@@ -50,7 +48,6 @@ const TagForm = styled.form`
 const Tag = styled.div`
     margin-right: 0.5rem;
     color: ${palette.gray[6]};
-    //cursor: pointer;
     &:hover {
         opacity: 0.5;
     }

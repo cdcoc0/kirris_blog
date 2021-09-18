@@ -11,7 +11,7 @@ export const listPosts = ({tag, username, page}) => {
         tag,
         username,
         page,
-    }); //카테고리 추가
+    });
     return client.get(`/api/posts?${queryString}`);
 }
 
