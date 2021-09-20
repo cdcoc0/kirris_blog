@@ -32,9 +32,6 @@ public class PostsController {
         if(result.hasErrors())
             throw new BadRequestException();
 
-        //==작성자 정보 가져오기
-        //==html태그 검증, 태그 문자열 변경, 썸네일 추출
-        //==저장
         return ResponseEntity.ok().body(postsService.write(post, user));
     }
 
@@ -74,8 +71,6 @@ public class PostsController {
     @GetMapping("/api/posts/{id}")
     public ResponseEntity<PostsResponseDto> read(@PathVariable("id") Long id) {
 
-        //==글번호로 해당 게시글 가져오기
-        //==응답 dto에 저장, 태그 처리
         return ResponseEntity.ok().body(postsService.read(id));
     }
 
@@ -83,8 +78,6 @@ public class PostsController {
     @PutMapping("/auth/own/{id}")
     public ResponseEntity<PostsResponseDto> update(@PathVariable("id") Long id, @RequestBody PostsRequestDto post) {
 
-        //==글번호로 게시글 찾기
-        //==태그 처리, 찾은 게시글 수정
         return ResponseEntity.ok().body(postsService.update(id, post));
         //merge 지양
     }

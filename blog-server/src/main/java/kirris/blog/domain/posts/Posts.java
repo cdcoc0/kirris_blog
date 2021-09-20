@@ -51,10 +51,11 @@ public class Posts {
         this.thumbnail = thumbnail;
     }
 
-    public void update(String title, String body, String handledTags) {
+    public void update(String title, String body, String handledTags, String thumbnail) {
         this.title = title;
         this.body = body;
         this.tags = handledTags;
+        this.thumbnail = thumbnail;
     }
 
     public void addAuth(Auth auth) {

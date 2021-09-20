@@ -55,7 +55,7 @@ public class PostsRequestDto{
     }
 
     //==body에서 첫 번째 img태그 추출해 썸네일로 저장
-    public void getThumbnail() {
+    public void extractThumbnail() {
         int idx = body.indexOf("<img");
         if(idx >= 0) {
             String sub = body.substring(idx);

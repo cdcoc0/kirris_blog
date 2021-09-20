@@ -35,7 +35,7 @@ public class PostsService {
         //==html태그 검증, 태그 문자열 변경, 썸네일 추출
         post.sanitizeHtml();
         post.handleTags();
-        post.getThumbnail();
+        post.extractThumbnail();
 
         //응답 DTO 반환
         return new PostsResponseDto(postsRepository.save(post, userInfo));
@@ -83,9 +83,9 @@ public class PostsService {
 
         //==태그 처리, 찾은 게시글 수정
         post.sanitizeHtml();
-        post.getThumbnail();
+        post.extractThumbnail();
         post.handleTags();
-        entity.update(post.getTitle(), post.getBody(), post.getHandledTags());
+        entity.update(post.getTitle(), post.getBody(), post.getHandledTags(), post.getThumbnail());
 
         return new PostsResponseDto(entity);
     }
