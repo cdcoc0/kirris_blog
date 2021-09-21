@@ -20,8 +20,9 @@
 
 - JWT authentication
 - Post Create, Read, Update, and Delete
-<br /><br /><br /><br /><br />
+<br />
 
+## 🎥 Screens
 
 <div>
   <img width="800" height="400" src="https://user-images.githubusercontent.com/61813428/134133603-7b8ae53c-8aba-425d-9d1f-e0394008b2b5.gif">
