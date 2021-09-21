@@ -37,10 +37,10 @@ public class PostsResponseDto {
 
         body = policy.sanitize(body);
 
-        if(title.length() > 20)
+        if(title.length() > 25)
             title = title.substring(0, 25) + " ...";
 
-        if(body.length() > 100)
+        if(body.length() > 110)
             body = body.substring(0, 110) + " ...";
     }
 
