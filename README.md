@@ -28,6 +28,7 @@
 
 - React
 - Spring Boot
+<br />
 
 ## 🍒 Major Features
 
