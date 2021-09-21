@@ -10,7 +10,7 @@
 이 프로젝트를 진행하며 예외 처리, 인터셉터와 필터 등 API 개발에 필요한 기본적인 스프링의 기능들과 JPA에 대해 공부할 수 있었습니다. 또한 그동안 리액트에서 특히 어렵게 느껴졌던 Hooks, Redux, Redux-thunk를 다양하게 적용하고, 그 과정에서 보다 효율적인 코드, 동작에 대해 고민해볼 수 있었습니다.<br /><br /><br />
 
 <div>
-  <img width="800" height="400" src="https://user-images.githubusercontent.com/61813428/134118377-a396f285-c2bf-400f-8ef7-61cf273a3a22.gif">
+  <img width="800" height="400" src="https://user-images.githubusercontent.com/61813428/134133603-7b8ae53c-8aba-425d-9d1f-e0394008b2b5.gif">
 </div>
 <br />
 
