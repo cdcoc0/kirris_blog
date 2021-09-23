@@ -12,7 +12,7 @@
 ## 🗃 Libs
 
 |라이브러리|👀|
-|---|---|
+|:---:|:---:|
 |spring security|보안|
 |jjwt|json web token 발급 및 관리|
 |owasp java html sanitizer|text editor의 html 태그 처리|
@@ -49,7 +49,8 @@
 ### Upgrade Skills in Spring
 
 - filter와 interceptor 처음으로 사용해보면서 클라이언트와의 요청과 응답에 대한 이해가 넓어졌습니다. <br /> 
-- 특히 이전에는 간과했던 예외처리를 꼼꼼히 하려고 노력했고, 이러한 경험을 통해 전반적으로 스프링을 다루는 숙련도가 높아진 것을 느꼈습니다. <br />
+- 특히 이전에는 간과했던 예외처리를 꼼꼼히 하려고 노력했고, <br />
+이러한 경험을 통해 전반적으로 스프링을 다루는 숙련도가 높아진 것을 느꼈습니다. <br />
 - 또한 응답 시 Response Entity를 사용할 경우 Response Body에 비해 Http Status, 에러 등 응답정보 관리에 용이하고, <br />
 통일성을 가질 수 있어 편리하다는 점도 알게 되었습니다.
 <br />
