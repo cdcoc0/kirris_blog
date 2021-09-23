@@ -1,5 +1,4 @@
 # ❤ KirrisBlog-Server
-<br />
 
 ## 🗺 Dev Environment
 
@@ -8,7 +7,7 @@
 |Java|11|
 |Spring Boot|v.2.5|
 |Gradle|v.7.1|
-|JPA||
+|JPA|
 <br /><br />
 
 ## 🗃 Libs
