@@ -1,4 +1,4 @@
-package kirris.blog;
+package kirris.blog.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

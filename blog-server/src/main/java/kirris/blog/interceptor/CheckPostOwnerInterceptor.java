@@ -1,4 +1,4 @@
-package kirris.blog;
+package kirris.blog.interceptor;
 
 import kirris.blog.domain.auth.AuthResponseDto;
 import kirris.blog.domain.posts.Posts;

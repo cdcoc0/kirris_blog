@@ -1,6 +1,6 @@
 package kirris.blog.controller;
 
-import kirris.blog.JwtToken;
+import kirris.blog.config.JwtToken;
 import kirris.blog.domain.auth.AuthRequestDto;
 import kirris.blog.domain.auth.AuthResponseDto;
 import kirris.blog.exception.BadRequestException;

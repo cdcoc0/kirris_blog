@@ -1,4 +1,4 @@
-package kirris.blog;
+package kirris.blog.interceptor;
 
 import kirris.blog.exception.UnauthorizedException;
 import org.springframework.stereotype.Component;

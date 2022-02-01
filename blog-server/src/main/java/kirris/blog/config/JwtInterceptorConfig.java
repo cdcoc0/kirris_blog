@@ -1,5 +1,7 @@
-package kirris.blog;
+package kirris.blog.config;
 
+import kirris.blog.interceptor.CheckLoggedInInterceptor;
+import kirris.blog.interceptor.CheckPostOwnerInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

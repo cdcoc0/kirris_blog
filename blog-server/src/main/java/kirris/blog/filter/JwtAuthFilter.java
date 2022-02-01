@@ -1,5 +1,6 @@
-package kirris.blog;
+package kirris.blog.filter;
 
+import kirris.blog.config.JwtToken;
 import kirris.blog.domain.auth.AuthResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
